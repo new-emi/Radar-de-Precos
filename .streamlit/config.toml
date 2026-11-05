@@ -1,0 +1,10 @@
+# Tema do Radar de Preços (o Streamlit lê este arquivo sozinho ao abrir o painel)
+[theme]
+base = "light"
+primaryColor = "#17804A"
+backgroundColor = "#F1F4F0"
+secondaryBackgroundColor = "#FFFFFF"
+textColor = "#1C2B23"
+
+[client]
+toolbarMode = "minimal"   # esconde o menu de desenvolvedor (Deploy etc.)

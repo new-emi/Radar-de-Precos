@@ -1,0 +1,24 @@
+# ---- Segredos: NUNCA vão para o GitHub ----
+.env
+ml_token.json
+
+# ---- Dados pessoais e gerados pelo robô ----
+lista.txt
+dados_black_friday.json
+historico.db
+busca_automatica.log
+debug_ml.*
+
+# ---- Ambiente e caches do Python ----
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# ---- Perfis de navegador e backups antigos ----
+chrome_perfil_real/
+backup_v1/
+
+# ---- Sistema ----
+.DS_Store
+Thumbs.db

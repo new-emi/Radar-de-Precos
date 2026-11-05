@@ -1,0 +1,546 @@
+{
+  "atualizado_em": "04/11/2026 20:38",
+  "lojas": {
+    "Americanas": 9,
+    "Atacadão": 11,
+    "Muffato": 18,
+    "Magalu": 20,
+    "Amazon": 20
+  },
+  "itens": {
+    "oleo capilar elseve": {
+      "recomendacoes_ia": [
+        {
+          "produto": "L'Oréal Paris Elseve Óleo Extraordinário Finalizador Capilar, Nutrição Profunda com 6 Óleos Preciosos, Anti-Frizz, Proteção Térmica até 230°C, Brilho Intenso para Todos os Tipos de Cabelo, 100ml",
+          "loja": "Amazon",
+          "preco": "R$ 29,90",
+          "preco_num": 29.9,
+          "link": "https://www.amazon.com.br/Paris-Extraordin%C3%A1rio-Finalizador-Preciosos-Anti-Frizz/dp/B07H113TPQ/ref=sr_1_2?dib=eyJ2IjoiMSJ9.2N0OIW9joQLxtbrbq0-xqB2Bzzh13FTgU64n_3GvpyeW4p4GzOauZYqjEN9F-NHxQrBgmxpDZsYf7hKTRwEgdD-ILvKvK4yf4QzQx3sobkv0lqN-XoGhe7BDaILaLSsimNc9Z9wqKB3Ya1939Rw89L4wuTGHo7cSpr7CBSEkA07GcElhQuLn83NrwCxAqWK_StepVjpsyJlW1a02xBlnPRRt01PyrxAPDqCk__PZ8cCvK0cSXGrTJN1p-UbpyRTFFqFT0tepO1_ttQ7049BcJo-6mGfc1kfuIIQabrKq8nQ.qGC8BCJCrLj_oHV1P_4VgyiTgUvOtcSBGrnrXLUJgvU&dib_tag=se&keywords=oleo+capilar+elseve&qid=1793842665&sr=8-2",
+          "motivo": "É o óleo capilar Elseve de 100ml a R$ 4,98 por 100ml, o mais barato entre os Elseve."
+        },
+        {
+          "produto": "Óleo Capilar Elseve Extraordinário 100ml",
+          "loja": "Magalu",
+          "preco": "R$ 38,12",
+          "preco_num": 38.12,
+          "link": "https://www.magazineluiza.com.br/oleo-capilar-elseve-extraordinario-100ml/p/dgb6ke06h3/pf/olcp/?seller_id=farmaciaindiana",
+          "motivo": "Óleo capilar Elseve de 100ml a R$ 38,12 por 100ml, opção da marca pedida."
+        }
+      ],
+      "produtos": [
+        {
+          "loja": "Magalu",
+          "titulo": "Lola Cosmetics Argan Oil - Óleo Capilar",
+          "preco": 14.41,
+          "link": "https://www.magazineluiza.com.br/lola-cosmetics-argan-oil-oleo-capilar-lola-from-rio/p/gfe784jkh7/pf/olcp/?seller_id=epocacosmeticos-integra",
+          "fora_do_pedido": true
+        },
+        {
+          "loja": "Amazon",
+          "titulo": "Pantene Pro-V Óleo Capilar Queratina Milagroso Finalizador Leave-in 95 ml",
+          "preco": 17.61,
+          "link": "https://www.amazon.com.br/sspa/click?ie=UTF8&spc=MTo0MjU1OTQyMjM5ODcyMzYwOjE3OTM4NDI2NjU6c3BfYXRmOjMwMTI0NDc3ODczMzIwMjo6MDo6&url=%2FPantene-Miracles-Queratina-Capilar-Milagroso%2Fdp%2FB0CVXT2K1S%2Fref%3Dsr_1_1_sspa%3Fdib%3DeyJ2IjoiMSJ9.2N0OIW9joQLxtbrbq0-xqB2Bzzh13FTgU64n_3GvpyeW4p4GzOauZYqjEN9F-NHxQrBgmxpDZsYf7hKTRwEgdD-ILvKvK4yf4QzQx3sobkv0lqN-XoGhe7BDaILaLSsimNc9Z9wqKB3Ya1939Rw89L4wuTGHo7cSpr7CBSEkA07GcElhQuLn83NrwCxAqWK_StepVjpsyJlW1a02xBlnPRRt01PyrxAPDqCk__PZ8cCvK0cSXGrTJN1p-UbpyRTFFqFT0tepO1_ttQ7049BcJo-6mGfc1kfuIIQabrKq8nQ.qGC8BCJCrLj_oHV1P_4VgyiTgUvOtcSBGrnrXLUJgvU%26dib_tag%3Dse%26keywords%3Doleo%2Bcapilar%2Belseve%26qid%3D1793842665%26sr%3D8-1-spons%26sp_csd%3Dd2lkZ2V0TmFtZT1zcF9hdGY%26psc%3D1",
+          "fora_do_pedido": true
+        },
+        {
+          "loja": "Muffato",
+          "titulo": "Creme para Pentear L'Oréal Paris Elseve Óleo Extraordinário 250ml",
+          "preco": 22.24,
+          "link": "https://www.supermuffato.com.br/creme-elseve-pentear-oleo-extra-nutricao-intensa-250ml-189409/p",
+          "fora_do_pedido": true
+        },
+        {
+          "loja": "Americanas",
+          "titulo": "Óleo Capilar Reparação e Maciez 40ml DaBelle Blend de Óleos Vegano",
+          "preco": 22.99,
+          "link": "https://www.americanas.com.br/oleo-capilar-argan-blend-reparador-maciez-dabelle-40ml-4857194262/p",
+          "fora_do_pedido": true
+        },
+        {
+          "loja": "Amazon",
+          "titulo": "Sérum Leave-in Cabelos Finos Elseve L'Oréal Paris Colágeno Encorpador 100ml",
+          "preco": 25.19,
+          "link": "https://www.amazon.com.br/Collagen-Capilar-Cabelos-Pept%C3%ADdeos-Col%C3%A1geno/dp/B0G3YGYW4Z/ref=sr_1_3?dib=eyJ2IjoiMSJ9.2N0OIW9joQLxtbrbq0-xqB2Bzzh13FTgU64n_3GvpyeW4p4GzOauZYqjEN9F-NHxQrBgmxpDZsYf7hKTRwEgdD-ILvKvK4yf4QzQx3sobkv0lqN-XoGhe7BDaILaLSsimNc9Z9wqKB3Ya1939Rw89L4wuTGHo7cSpr7CBSEkA07GcElhQuLn83NrwCxAqWK_StepVjpsyJlW1a02xBlnPRRt01PyrxAPDqCk__PZ8cCvK0cSXGrTJN1p-UbpyRTFFqFT0tepO1_ttQ7049BcJo-6mGfc1kfuIIQabrKq8nQ.qGC8BCJCrLj_oHV1P_4VgyiTgUvOtcSBGrnrXLUJgvU&dib_tag=se&keywords=oleo+capilar+elseve&qid=1793842665&sr=8-3",
+          "fora_do_pedido": true
+        },
+        {
+          "loja": "Muffato",
+          "titulo": "Máscara Capilar Naturre Óleo de Coco 240g",
+          "preco": 25.7,
+          "link": "https://www.supermuffato.com.br/mascara-naturre-capilar-oleo-de-coco-240g-233756/p",
+          "fora_do_pedido": true
+        },
+        {
+          "loja": "Muffato",
+          "titulo": "Óleo Capilar Beauty Color Blend  7 Óleos 40ml",
+          "preco": 27.8,
+          "link": "https://www.supermuffato.com.br/oleo-capilar-beauty-color-blend-7-oleos-40ml-230159/p",
+          "fora_do_pedido": true
+        },
+        {
+          "loja": "Muffato",
+          "titulo": "Condicionador Elseve Óleo Extraordinário 400ml",
+          "preco": 28.8,
+          "link": "https://www.supermuffato.com.br/condicionador-elseve-oleo-extra-nutritivo-400ml-189396/p",
+          "fora_do_pedido": true
+        },
+        {
+          "loja": "Amazon",
+          "titulo": "L'Oréal Paris Elseve Sérum Leave-in Liso dos Sonhos com Tecnologia Ativada por Calor, Antifrizz, Protetor Térmico e Barreira Contra Umidade, 100ml",
+          "preco": 29.35,
+          "link": "https://www.amazon.com.br/Tecnologia-Ativada-Antifrizz-Protetor-Barreira/dp/B0DV1JZFXS/ref=sr_1_4?dib=eyJ2IjoiMSJ9.2N0OIW9joQLxtbrbq0-xqB2Bzzh13FTgU64n_3GvpyeW4p4GzOauZYqjEN9F-NHxQrBgmxpDZsYf7hKTRwEgdD-ILvKvK4yf4QzQx3sobkv0lqN-XoGhe7BDaILaLSsimNc9Z9wqKB3Ya1939Rw89L4wuTGHo7cSpr7CBSEkA07GcElhQuLn83NrwCxAqWK_StepVjpsyJlW1a02xBlnPRRt01PyrxAPDqCk__PZ8cCvK0cSXGrTJN1p-UbpyRTFFqFT0tepO1_ttQ7049BcJo-6mGfc1kfuIIQabrKq8nQ.qGC8BCJCrLj_oHV1P_4VgyiTgUvOtcSBGrnrXLUJgvU&dib_tag=se&keywords=oleo+capilar+elseve&qid=1793842665&sr=8-4",
+          "fora_do_pedido": true
+        },
+        {
+          "loja": "Amazon",
+          "titulo": "L'Oréal Paris Elseve Óleo Extraordinário Finalizador Capilar, Nutrição Profunda com 6 Óleos Preciosos, Anti-Frizz, Proteção Térmica até 230°C, Brilho Intenso para Todos os Tipos de Cabelo, 100ml",
+          "preco": 29.9,
+          "link": "https://www.amazon.com.br/Paris-Extraordin%C3%A1rio-Finalizador-Preciosos-Anti-Frizz/dp/B07H113TPQ/ref=sr_1_2?dib=eyJ2IjoiMSJ9.2N0OIW9joQLxtbrbq0-xqB2Bzzh13FTgU64n_3GvpyeW4p4GzOauZYqjEN9F-NHxQrBgmxpDZsYf7hKTRwEgdD-ILvKvK4yf4QzQx3sobkv0lqN-XoGhe7BDaILaLSsimNc9Z9wqKB3Ya1939Rw89L4wuTGHo7cSpr7CBSEkA07GcElhQuLn83NrwCxAqWK_StepVjpsyJlW1a02xBlnPRRt01PyrxAPDqCk__PZ8cCvK0cSXGrTJN1p-UbpyRTFFqFT0tepO1_ttQ7049BcJo-6mGfc1kfuIIQabrKq8nQ.qGC8BCJCrLj_oHV1P_4VgyiTgUvOtcSBGrnrXLUJgvU&dib_tag=se&keywords=oleo+capilar+elseve&qid=1793842665&sr=8-2"
+        },
+        {
+          "loja": "Muffato",
+          "titulo": "Aparelho Descartável para Depilar Gillette Venus Simply3 Sensitive Leve 4 Pague 3 Unidades",
+          "preco": 35,
+          "link": "https://www.supermuffato.com.br/aparelho-descartavel-para-depilar-gillette-venus-simply3--sensitive-leve-4-pague-3-unidades-272791/p",
+          "fora_do_pedido": true
+        },
+        {
+          "loja": "Magalu",
+          "titulo": "Óleo Capilar Pantene Pro-V Miracles Óleo Milagroso 95ml",
+          "preco": 37.05,
+          "link": "https://www.magazineluiza.com.br/oleo-capilar-pantene-pro-v-miracles-oleo-milagroso-95ml/p/238494200/pf/olcp/?seller_id=magazineluiza",
+          "fora_do_pedido": true
+        },
+        {
+          "loja": "Magalu",
+          "titulo": "Óleo Capilar Elseve Extraordinário 100ml",
+          "preco": 38.12,
+          "link": "https://www.magazineluiza.com.br/oleo-capilar-elseve-extraordinario-100ml/p/dgb6ke06h3/pf/olcp/?seller_id=farmaciaindiana"
+        },
+        {
+          "loja": "Magalu",
+          "titulo": "Alfaparf Semi Di Lino Cristalli Liquidi Óleo Capilar 15ml",
+          "preco": 41.9,
+          "link": "https://www.magazineluiza.com.br/alfaparf-semi-di-lino-cristalli-liquidi-oleo-capilar-15ml/p/gcbb459k59/pf/olcp/?seller_id=docebelezaloja",
+          "fora_do_pedido": true
+        },
+        {
+          "loja": "Americanas",
+          "titulo": "Sérum Capilar Brilho Intenso 100ml Elseve Glycolic Gloss Ácido Glicólico 3%",
+          "preco": 46.99,
+          "link": "https://www.americanas.com.br/elseve-l-oreal-paris-glycolic-gloss-serum-capilar-100ml-7479509028/p",
+          "fora_do_pedido": true
+        },
+        {
+          "loja": "Americanas",
+          "titulo": "Sérum Capilar Encorpa e Reestrutura 100ml Elseve Colágeno Lifter para Cabelos Finos e Ralos",
+          "preco": 49.99,
+          "link": "https://www.americanas.com.br/serum-elseve-colageno-100ml/p",
+          "fora_do_pedido": true
+        },
+        {
+          "loja": "Americanas",
+          "titulo": "Kit Óleo Capilar Proteção Térmica e Antifrizz 135ml DaBelle Meus Óleos Mágicos Vegano Argan e Rícino",
+          "preco": 54.99,
+          "link": "https://www.americanas.com.br/kit-dabelle-meus-oleos-magicos-135ml/p",
+          "fora_do_pedido": true
+        },
+        {
+          "loja": "Magalu",
+          "titulo": "Óleo Capilar Sebastian Dark Oil",
+          "preco": 127.5,
+          "link": "https://www.magazineluiza.com.br/oleo-capilar-sebastian-dark-oil-sebastian-professional/p/fk7e7jhh8d/pf/olcp/?seller_id=epocacosmeticos-integra",
+          "fora_do_pedido": true
+        }
+      ]
+    },
+    "lustra moveis poliflor": {
+      "recomendacoes_ia": [
+        {
+          "produto": "Lustra Móveis Poliflor Original 200ml",
+          "loja": "Amazon",
+          "preco": "R$ 12,37",
+          "preco_num": 12.37,
+          "link": "https://www.amazon.com.br/sspa/click?ie=UTF8&spc=MTo1OTM0MjQ0ODk3MzYyMDA3OjE3OTM4NDI2ODE6c3BfYXRmOjMwMTIyNTQ4NzAzNjkwMjo6MDo6&url=%2FLustra-M%25C3%25B3veis-Poliflor-Multi-Superf%25C3%25ADcie%2Fdp%2FB07DYVS81G%2Fref%3Dsr_1_1_sspa%3Fdib%3DeyJ2IjoiMSJ9.HjjxLwM7X5qZ3uBWk7J73g1BPva5F-h3z6mQYCdjZHPxbcTKfuyWN4IW7UjJAFbPAYrL32-ILFPdlFvcHqboq7q55KMZbBQJvippdAEGU0cI-gnW8wObRv1SdKdSgY4CovmU42xOzZbHXt7NC1zsSxj4Zt5UqQFZGxgF0znsZgmIFGzZnjfqfTV6Us3mariXwbrZTNgUkQ4kul0tAbwLwGJBe9XV1dgvmEhRxhsL7btmsHWQoO5M4CjDiw9ntOs1LM0rqf4tiVd7slkVIvxSSKnEYskknph1q1c6cl8_VYQ.m01-OyZoeaQl9NnzUknYYjJtmq0AyJWzIp6hWnPLdJo%26dib_tag%3Dse%26keywords%3Dlustra%2Bmoveis%2Bpoliflor%26qid%3D1793842681%26sr%3D8-1-spons%26sp_csd%3Dd2lkZ2V0TmFtZT1zcF9hdGY%26psc%3D1",
+          "motivo": "Sai a R$ 6,18 por 100ml, o mais barato entre os Poliflor de 200ml."
+        },
+        {
+          "produto": "Lustra Movéis Lavanda 500ml",
+          "loja": "Amazon",
+          "preco": "R$ 23,89",
+          "preco_num": 23.89,
+          "link": "https://www.amazon.com.br/sspa/click?ie=UTF8&spc=MTo1OTM0MjQ0ODk3MzYyMDA3OjE3OTM4NDI2ODE6c3BfYXRmOjMwMTIyNTQ4NzAzNjcwMjo6MDo6&url=%2FLustra-Perfumado-Lavanda-Desconto-Poliflor%2Fdp%2FB07B9ZQD99%2Fref%3Dsr_1_2_sspa%3Fdib%3DeyJ2IjoiMSJ9.HjjxLwM7X5qZ3uBWk7J73g1BPva5F-h3z6mQYCdjZHPxbcTKfuyWN4IW7UjJAFbPAYrL32-ILFPdlFvcHqboq7q55KMZbBQJvippdAEGU0cI-gnW8wObRv1SdKdSgY4CovmU42xOzZbHXt7NC1zsSxj4Zt5UqQFZGxgF0znsZgmIFGzZnjfqfTV6Us3mariXwbrZTNgUkQ4kul0tAbwLwGJBe9XV1dgvmEhRxhsL7btmsHWQoO5M4CjDiw9ntOs1LM0rqf4tiVd7slkVIvxSSKnEYskknph1q1c6cl8_VYQ.m01-OyZoeaQl9NnzUknYYjJtmq0AyJWzIp6hWnPLdJo%26dib_tag%3Dse%26keywords%3Dlustra%2Bmoveis%2Bpoliflor%26qid%3D1793842681%26sr%3D8-2-spons%26sp_csd%3Dd2lkZ2V0TmFtZT1zcF9hdGY%26psc%3D1",
+          "motivo": "Sai a R$ 4,78 por 100ml, o melhor preço por volume entre todos, e o frasco de 500ml rende bastante."
+        }
+      ],
+      "produtos": [
+        {
+          "loja": "Amazon",
+          "titulo": "Lustra Móveis Poliflor Original 200ml",
+          "preco": 12.37,
+          "link": "https://www.amazon.com.br/sspa/click?ie=UTF8&spc=MTo1OTM0MjQ0ODk3MzYyMDA3OjE3OTM4NDI2ODE6c3BfYXRmOjMwMTIyNTQ4NzAzNjkwMjo6MDo6&url=%2FLustra-M%25C3%25B3veis-Poliflor-Multi-Superf%25C3%25ADcie%2Fdp%2FB07DYVS81G%2Fref%3Dsr_1_1_sspa%3Fdib%3DeyJ2IjoiMSJ9.HjjxLwM7X5qZ3uBWk7J73g1BPva5F-h3z6mQYCdjZHPxbcTKfuyWN4IW7UjJAFbPAYrL32-ILFPdlFvcHqboq7q55KMZbBQJvippdAEGU0cI-gnW8wObRv1SdKdSgY4CovmU42xOzZbHXt7NC1zsSxj4Zt5UqQFZGxgF0znsZgmIFGzZnjfqfTV6Us3mariXwbrZTNgUkQ4kul0tAbwLwGJBe9XV1dgvmEhRxhsL7btmsHWQoO5M4CjDiw9ntOs1LM0rqf4tiVd7slkVIvxSSKnEYskknph1q1c6cl8_VYQ.m01-OyZoeaQl9NnzUknYYjJtmq0AyJWzIp6hWnPLdJo%26dib_tag%3Dse%26keywords%3Dlustra%2Bmoveis%2Bpoliflor%26qid%3D1793842681%26sr%3D8-1-spons%26sp_csd%3Dd2lkZ2V0TmFtZT1zcF9hdGY%26psc%3D1"
+        },
+        {
+          "loja": "Muffato",
+          "titulo": "Lustra Móveis Poliflor Lavanda 200ml",
+          "preco": 14.9,
+          "link": "https://www.supermuffato.com.br/lustra-moveis-poliflor-lavanda-200ml-9127/p"
+        },
+        {
+          "loja": "Muffato",
+          "titulo": "Lustra Móveis Poliflor Original 200ml",
+          "preco": 14.9,
+          "link": "https://www.supermuffato.com.br/lustra-moveis-poliflor-original-200ml-97151/p"
+        },
+        {
+          "loja": "Amazon",
+          "titulo": "Lustra Móveis Poliflor Lavanda 200ml",
+          "preco": 15.65,
+          "link": "https://www.amazon.com.br/sspa/click?ie=UTF8&spc=MTo1OTM0MjQ0ODk3MzYyMDA3OjE3OTM4NDI2ODE6c3BfYXRmOjMwMTIyNTQ4NzAzNzIwMjo6MDo6&url=%2FLustra-M%25C3%25B3veis-Poliflor-Lavanda-200%2Fdp%2FB07DZ9G63J%2Fref%3Dsr_1_3_sspa%3Fdib%3DeyJ2IjoiMSJ9.HjjxLwM7X5qZ3uBWk7J73g1BPva5F-h3z6mQYCdjZHPxbcTKfuyWN4IW7UjJAFbPAYrL32-ILFPdlFvcHqboq7q55KMZbBQJvippdAEGU0cI-gnW8wObRv1SdKdSgY4CovmU42xOzZbHXt7NC1zsSxj4Zt5UqQFZGxgF0znsZgmIFGzZnjfqfTV6Us3mariXwbrZTNgUkQ4kul0tAbwLwGJBe9XV1dgvmEhRxhsL7btmsHWQoO5M4CjDiw9ntOs1LM0rqf4tiVd7slkVIvxSSKnEYskknph1q1c6cl8_VYQ.m01-OyZoeaQl9NnzUknYYjJtmq0AyJWzIp6hWnPLdJo%26dib_tag%3Dse%26keywords%3Dlustra%2Bmoveis%2Bpoliflor%26qid%3D1793842681%26sr%3D8-3-spons%26sp_csd%3Dd2lkZ2V0TmFtZT1zcF9hdGY%26psc%3D1"
+        },
+        {
+          "loja": "Magalu",
+          "titulo": "Lustra moveis poliflor jasmim 200 ml",
+          "preco": 17.7,
+          "link": "https://www.magazineluiza.com.br/lustra-moveis-poliflor-jasmim-200-ml/p/kda3ah1c0h/me/lmov/?seller_id=naheraresende"
+        },
+        {
+          "loja": "Magalu",
+          "titulo": "Lustra Móveis Poliflor Lavanda 200ml",
+          "preco": 21.91,
+          "link": "https://www.magazineluiza.com.br/lustra-moveis-poliflor-lavanda-200ml/p/abed9d3a2a/me/lmov/?seller_id=plandistribuidora"
+        },
+        {
+          "loja": "Magalu",
+          "titulo": "Lustra Móveis Poliflor Tradicional 200ml Madeira Vidro Metal",
+          "preco": 23.16,
+          "link": "https://www.magazineluiza.com.br/lustra-moveis-poliflor-tradicional-200ml-madeira-vidro-metal/p/he920k5ddd/me/lmov/?seller_id=teimosiastore"
+        },
+        {
+          "loja": "Amazon",
+          "titulo": "Lustra Móveis Poliflor Lavanda, Extra Brilho, Fragrância Duradora, Ideal Para Móveis, Pedras, Fogões e Geladeiras, Limpeza Máxima, Proteção Contra Poeira, 200ml",
+          "preco": 23.5,
+          "link": "https://www.amazon.com.br/sspa/click?ie=UTF8&spc=MTo1OTM0MjQ0ODk3MzYyMDA3OjE3OTM4NDI2ODE6c3BfYXRmOjMwMTE4NDM1NDY1MzgwMjo6MDo6&url=%2FPoliflor-Fragr%25C3%25A2ncia-Duradora-Geladeiras-Prote%25C3%25A7%25C3%25A3o%2Fdp%2FB0GQ7KGSHV%2Fref%3Dsr_1_4_sspa%3Fdib%3DeyJ2IjoiMSJ9.HjjxLwM7X5qZ3uBWk7J73g1BPva5F-h3z6mQYCdjZHPxbcTKfuyWN4IW7UjJAFbPAYrL32-ILFPdlFvcHqboq7q55KMZbBQJvippdAEGU0cI-gnW8wObRv1SdKdSgY4CovmU42xOzZbHXt7NC1zsSxj4Zt5UqQFZGxgF0znsZgmIFGzZnjfqfTV6Us3mariXwbrZTNgUkQ4kul0tAbwLwGJBe9XV1dgvmEhRxhsL7btmsHWQoO5M4CjDiw9ntOs1LM0rqf4tiVd7slkVIvxSSKnEYskknph1q1c6cl8_VYQ.m01-OyZoeaQl9NnzUknYYjJtmq0AyJWzIp6hWnPLdJo%26dib_tag%3Dse%26keywords%3Dlustra%2Bmoveis%2Bpoliflor%26qid%3D1793842681%26sr%3D8-4-spons%26sp_csd%3Dd2lkZ2V0TmFtZT1zcF9hdGY%26psc%3D1"
+        },
+        {
+          "loja": "Amazon",
+          "titulo": "Lustra Movéis Lavanda 500ml",
+          "preco": 23.89,
+          "link": "https://www.amazon.com.br/sspa/click?ie=UTF8&spc=MTo1OTM0MjQ0ODk3MzYyMDA3OjE3OTM4NDI2ODE6c3BfYXRmOjMwMTIyNTQ4NzAzNjcwMjo6MDo6&url=%2FLustra-Perfumado-Lavanda-Desconto-Poliflor%2Fdp%2FB07B9ZQD99%2Fref%3Dsr_1_2_sspa%3Fdib%3DeyJ2IjoiMSJ9.HjjxLwM7X5qZ3uBWk7J73g1BPva5F-h3z6mQYCdjZHPxbcTKfuyWN4IW7UjJAFbPAYrL32-ILFPdlFvcHqboq7q55KMZbBQJvippdAEGU0cI-gnW8wObRv1SdKdSgY4CovmU42xOzZbHXt7NC1zsSxj4Zt5UqQFZGxgF0znsZgmIFGzZnjfqfTV6Us3mariXwbrZTNgUkQ4kul0tAbwLwGJBe9XV1dgvmEhRxhsL7btmsHWQoO5M4CjDiw9ntOs1LM0rqf4tiVd7slkVIvxSSKnEYskknph1q1c6cl8_VYQ.m01-OyZoeaQl9NnzUknYYjJtmq0AyJWzIp6hWnPLdJo%26dib_tag%3Dse%26keywords%3Dlustra%2Bmoveis%2Bpoliflor%26qid%3D1793842681%26sr%3D8-2-spons%26sp_csd%3Dd2lkZ2V0TmFtZT1zcF9hdGY%26psc%3D1"
+        },
+        {
+          "loja": "Muffato",
+          "titulo": "Lustra Móveis Poliflor 500mL 20% de desconto",
+          "preco": 25.5,
+          "link": "https://www.supermuffato.com.br/lustra-mov-poliflor-lavanda-fc-500ml-20-off-226516/p"
+        },
+        {
+          "loja": "Magalu",
+          "titulo": "Lustra Móveis Perfume Suave Poliflor 200ml",
+          "preco": 29.87,
+          "link": "https://www.magazineluiza.com.br/lustra-moveis-perfume-suave-poliflor-200ml/p/ee8494ca3j/me/lmov/?seller_id=minhacestinha"
+        },
+        {
+          "loja": "Atacadão",
+          "titulo": "Lustra Móveis Poliflor 200ml LEVE 3 PAGUE 2",
+          "preco": 29.9,
+          "link": "https://www.atacadao.com.br/lustra-moveis-poliflor-26778/p"
+        },
+        {
+          "loja": "Magalu",
+          "titulo": "Lustra Móveis Lavanda Poliflor 500ml promocional",
+          "preco": 46.79,
+          "link": "https://www.magazineluiza.com.br/lustra-moveis-lavanda-poliflor-500ml-promocional/p/cb0bf11h48/me/lmov/?seller_id=dona"
+        }
+      ]
+    },
+    "shampoo dove": {
+      "recomendacoes_ia": [
+        {
+          "produto": "Dove Shampoo Reconstrução + Aminoácido 600ml Pump",
+          "loja": "Amazon",
+          "preco": "R$ 25,11",
+          "preco_num": 25.11,
+          "link": "https://www.amazon.com.br/Dove-Shampoo-Reconstru%C3%A7%C3%A3o-Amino%C3%A1cido-600ml/dp/B0FG1QYL12/ref=sr_1_3?dib=eyJ2IjoiMSJ9.7yl4FAgpPf5sy_Ia961xgznPZkpO1n0t-JWdhugBZEHhC3sHY-r1trWkm-eVA9Vsf1cPVy-yY1fxe5q5rHBEm6wsYwiQ-TYDTSxJ7HtaYxKebdz4g_RWIBqYGnGn_4XSA3USXO7ENyWK2nh-E-0_OkCI8-SkoY8PPcyc1Md46xN-t6cEockkI9NzUnxwe-5SOCA0LZb7uZBjV5LIaPVnhzrXWL60Mb5mRMclmAEAaGXdQoNwGpeRTAQQ1wdcMkkqZI3k56LjhBRCN7BnIKwy2F_kgFhkkTcLPfWck3cbAWA.hW8sx5SaN9vqzYVDJ6wummy-zEMvLw18teLB1XX62VY&dib_tag=se&keywords=shampoo+dove&qid=1793842694&sr=8-3",
+          "motivo": "Sai a R$ 4,18 por 100ml, o mais barato entre os shampoos Dove de 600ml."
+        },
+        {
+          "produto": "Dove Shampoo Hidratação + Hialuron-Vit 600ml Pump",
+          "loja": "Amazon",
+          "preco": "R$ 27,90",
+          "preco_num": 27.9,
+          "link": "https://www.amazon.com.br/Dove-Shampoo-Hidrata%C3%A7%C3%A3o-Hialuron-Vit-600ml/dp/B0FG1QBCQ7/ref=sr_1_1?dib=eyJ2IjoiMSJ9.7yl4FAgpPf5sy_Ia961xgznPZkpO1n0t-JWdhugBZEHhC3sHY-r1trWkm-eVA9Vsf1cPVy-yY1fxe5q5rHBEm6wsYwiQ-TYDTSxJ7HtaYxKebdz4g_RWIBqYGnGn_4XSA3USXO7ENyWK2nh-E-0_OkCI8-SkoY8PPcyc1Md46xN-t6cEockkI9NzUnxwe-5SOCA0LZb7uZBjV5LIaPVnhzrXWL60Mb5mRMclmAEAaGXdQoNwGpeRTAQQ1wdcMkkqZI3k56LjhBRCN7BnIKwy2F_kgFhkkTcLPfWck3cbAWA.hW8sx5SaN9vqzYVDJ6wummy-zEMvLw18teLB1XX62VY&dib_tag=se&keywords=shampoo+dove&qid=1793842694&sr=8-1",
+          "motivo": "Sai a R$ 4,65 por 100ml, boa opção de 600ml com preço baixo por litro."
+        }
+      ],
+      "produtos": [
+        {
+          "loja": "Amazon",
+          "titulo": "Dove Shampoo Reconstrução + Aminoácido 370ml",
+          "preco": 24.9,
+          "link": "https://www.amazon.com.br/Dove-Shampoo-Reconstru%C3%A7%C3%A3o-Amino%C3%A1cido-370ml/dp/B0FG1PV5C3/ref=sr_1_4?dib=eyJ2IjoiMSJ9.7yl4FAgpPf5sy_Ia961xgznPZkpO1n0t-JWdhugBZEHhC3sHY-r1trWkm-eVA9Vsf1cPVy-yY1fxe5q5rHBEm6wsYwiQ-TYDTSxJ7HtaYxKebdz4g_RWIBqYGnGn_4XSA3USXO7ENyWK2nh-E-0_OkCI8-SkoY8PPcyc1Md46xN-t6cEockkI9NzUnxwe-5SOCA0LZb7uZBjV5LIaPVnhzrXWL60Mb5mRMclmAEAaGXdQoNwGpeRTAQQ1wdcMkkqZI3k56LjhBRCN7BnIKwy2F_kgFhkkTcLPfWck3cbAWA.hW8sx5SaN9vqzYVDJ6wummy-zEMvLw18teLB1XX62VY&dib_tag=se&keywords=shampoo+dove&qid=1793842694&sr=8-4"
+        },
+        {
+          "loja": "Magalu",
+          "titulo": "Shampoo Dove Ritual de Reparação 400ml",
+          "preco": 24.99,
+          "link": "https://www.magazineluiza.com.br/shampoo-dove-ritual-de-reparacao-400ml/p/bgbe579hd2/me/mshp/?seller_id=oficialamericanas"
+        },
+        {
+          "loja": "Amazon",
+          "titulo": "Dove Shampoo Reconstrução + Aminoácido 600ml Pump",
+          "preco": 25.11,
+          "link": "https://www.amazon.com.br/Dove-Shampoo-Reconstru%C3%A7%C3%A3o-Amino%C3%A1cido-600ml/dp/B0FG1QYL12/ref=sr_1_3?dib=eyJ2IjoiMSJ9.7yl4FAgpPf5sy_Ia961xgznPZkpO1n0t-JWdhugBZEHhC3sHY-r1trWkm-eVA9Vsf1cPVy-yY1fxe5q5rHBEm6wsYwiQ-TYDTSxJ7HtaYxKebdz4g_RWIBqYGnGn_4XSA3USXO7ENyWK2nh-E-0_OkCI8-SkoY8PPcyc1Md46xN-t6cEockkI9NzUnxwe-5SOCA0LZb7uZBjV5LIaPVnhzrXWL60Mb5mRMclmAEAaGXdQoNwGpeRTAQQ1wdcMkkqZI3k56LjhBRCN7BnIKwy2F_kgFhkkTcLPfWck3cbAWA.hW8sx5SaN9vqzYVDJ6wummy-zEMvLw18teLB1XX62VY&dib_tag=se&keywords=shampoo+dove&qid=1793842694&sr=8-3"
+        },
+        {
+          "loja": "Muffato",
+          "titulo": "Kit Shampoo e Condicionador Dove UV Repair",
+          "preco": 25.7,
+          "link": "https://www.supermuffato.com.br/kit-shampoo-e-condicionador-dove-uv-repair-318175/p"
+        },
+        {
+          "loja": "Muffato",
+          "titulo": "Kit Dove Shampoo e Condicionador Reconstrução e Aminoacido",
+          "preco": 25.7,
+          "link": "https://www.supermuffato.com.br/kit-dove-shampoo-e-condicionador-reconstrucao-e-aminoacido-315033/p"
+        },
+        {
+          "loja": "Atacadão",
+          "titulo": "Kit Dove Shampoo + Condicionador UV Repair Glow Ferúlico",
+          "preco": 25.9,
+          "link": "https://www.atacadao.com.br/kit-dove-shampoo---condicionador-uv-repair-glow-ferulico-10585/p"
+        },
+        {
+          "loja": "Atacadão",
+          "titulo": "Kit Dove Shampoo + Condicionador Bond Repair Peptídeo",
+          "preco": 25.9,
+          "link": "https://www.atacadao.com.br/kit-dove-shampoo---condicionador-bond-repair-peptideo-8621/p"
+        },
+        {
+          "loja": "Atacadão",
+          "titulo": "Kit Dove Shampoo + Condicionador Hidratação + Hialuron",
+          "preco": 25.9,
+          "link": "https://www.atacadao.com.br/kit-dove-shampoo---condicionador-hidratacao---hialuron-8618/p"
+        },
+        {
+          "loja": "Atacadão",
+          "titulo": "Kit Dove Shampoo + Condicionador Nutrição + Tri-óleos",
+          "preco": 25.9,
+          "link": "https://www.atacadao.com.br/kit-dove-shampoo---condicionador-nutricao---tri-oleos-8617/p"
+        },
+        {
+          "loja": "Atacadão",
+          "titulo": "Kit Dove Shampoo + Condic Reconstrução + Aminoácido",
+          "preco": 25.9,
+          "link": "https://www.atacadao.com.br/kit-dove-shampoo---condicionador-reconstrucao---aminoacido-8616/p"
+        },
+        {
+          "loja": "Amazon",
+          "titulo": "Dove Condicionador Hidratação + Hialuron-Vit 600ml Pump",
+          "preco": 26.9,
+          "link": "https://www.amazon.com.br/Dove-Condicionador-Hidrata%C3%A7%C3%A3o-Hialuron-Vit-600ml/dp/B0FG1SBTJG/ref=sr_1_5?dib=eyJ2IjoiMSJ9.7yl4FAgpPf5sy_Ia961xgznPZkpO1n0t-JWdhugBZEHhC3sHY-r1trWkm-eVA9Vsf1cPVy-yY1fxe5q5rHBEm6wsYwiQ-TYDTSxJ7HtaYxKebdz4g_RWIBqYGnGn_4XSA3USXO7ENyWK2nh-E-0_OkCI8-SkoY8PPcyc1Md46xN-t6cEockkI9NzUnxwe-5SOCA0LZb7uZBjV5LIaPVnhzrXWL60Mb5mRMclmAEAaGXdQoNwGpeRTAQQ1wdcMkkqZI3k56LjhBRCN7BnIKwy2F_kgFhkkTcLPfWck3cbAWA.hW8sx5SaN9vqzYVDJ6wummy-zEMvLw18teLB1XX62VY&dib_tag=se&keywords=shampoo+dove&qid=1793842694&sr=8-5",
+          "fora_do_pedido": true
+        },
+        {
+          "loja": "Muffato",
+          "titulo": "Shampoo Dove Uv Repair Glow + Ferúlico 370Ml",
+          "preco": 27.7,
+          "link": "https://www.supermuffato.com.br/shampoo-dove-uv-repair-glow---ferulico-370ml-318188/p"
+        },
+        {
+          "loja": "Muffato",
+          "titulo": "Shampoo Dove Bond Intense Repair  350ml",
+          "preco": 27.7,
+          "link": "https://www.supermuffato.com.br/shampoo-dove-bond-intense-repair-350ml-305101/p"
+        },
+        {
+          "loja": "Amazon",
+          "titulo": "Dove Shampoo Hidratação + Hialuron-Vit 600ml Pump",
+          "preco": 27.9,
+          "link": "https://www.amazon.com.br/Dove-Shampoo-Hidrata%C3%A7%C3%A3o-Hialuron-Vit-600ml/dp/B0FG1QBCQ7/ref=sr_1_1?dib=eyJ2IjoiMSJ9.7yl4FAgpPf5sy_Ia961xgznPZkpO1n0t-JWdhugBZEHhC3sHY-r1trWkm-eVA9Vsf1cPVy-yY1fxe5q5rHBEm6wsYwiQ-TYDTSxJ7HtaYxKebdz4g_RWIBqYGnGn_4XSA3USXO7ENyWK2nh-E-0_OkCI8-SkoY8PPcyc1Md46xN-t6cEockkI9NzUnxwe-5SOCA0LZb7uZBjV5LIaPVnhzrXWL60Mb5mRMclmAEAaGXdQoNwGpeRTAQQ1wdcMkkqZI3k56LjhBRCN7BnIKwy2F_kgFhkkTcLPfWck3cbAWA.hW8sx5SaN9vqzYVDJ6wummy-zEMvLw18teLB1XX62VY&dib_tag=se&keywords=shampoo+dove&qid=1793842694&sr=8-1"
+        },
+        {
+          "loja": "Amazon",
+          "titulo": "Dove Shampoo UV Repair & Glow + Ferúlico 600ml",
+          "preco": 27.9,
+          "link": "https://www.amazon.com.br/Dove-Shampoo-Repair-Fer%C3%BAlico-600ml/dp/B0FQQMJNYM/ref=sr_1_2?dib=eyJ2IjoiMSJ9.7yl4FAgpPf5sy_Ia961xgznPZkpO1n0t-JWdhugBZEHhC3sHY-r1trWkm-eVA9Vsf1cPVy-yY1fxe5q5rHBEm6wsYwiQ-TYDTSxJ7HtaYxKebdz4g_RWIBqYGnGn_4XSA3USXO7ENyWK2nh-E-0_OkCI8-SkoY8PPcyc1Md46xN-t6cEockkI9NzUnxwe-5SOCA0LZb7uZBjV5LIaPVnhzrXWL60Mb5mRMclmAEAaGXdQoNwGpeRTAQQ1wdcMkkqZI3k56LjhBRCN7BnIKwy2F_kgFhkkTcLPfWck3cbAWA.hW8sx5SaN9vqzYVDJ6wummy-zEMvLw18teLB1XX62VY&dib_tag=se&keywords=shampoo+dove&qid=1793842694&sr=8-2"
+        },
+        {
+          "loja": "Magalu",
+          "titulo": "Shampoo Dove UV Repair & Glow + Ferúlico 600ml",
+          "preco": 28.56,
+          "link": "https://www.magazineluiza.com.br/shampoo-dove-uv-repair-glow-ferulico-600ml/p/adcea60d5k/me/mshp/?seller_id=farmaciaindiana"
+        },
+        {
+          "loja": "Magalu",
+          "titulo": "Kit 1 Shampoo Dove Baby Hidratação Enriquecida Cabelos Claros 200ml",
+          "preco": 28.78,
+          "link": "https://www.magazineluiza.com.br/kit-1-shampoo-dove-baby-hidratacao-enriquecida-cabelos-claros-200ml/p/gg913h154j/me/mshp/?seller_id=drogariaaraujosa"
+        },
+        {
+          "loja": "Magalu",
+          "titulo": "Shampoo Dove Uv Repair & Glow + Ferúlico 600ml",
+          "preco": 33.37,
+          "link": "https://www.magazineluiza.com.br/shampoo-dove-uv-repair-glow-ferulico-600ml/p/kfdk8a30fa/me/mshp/?seller_id=hipercarijos"
+        },
+        {
+          "loja": "Muffato",
+          "titulo": "Shampoo Dove Uv Repair 600ml",
+          "preco": 34.9,
+          "link": "https://www.supermuffato.com.br/shampoo-dove-uv-repair-600ml-318176/p"
+        },
+        {
+          "loja": "Magalu",
+          "titulo": "Sabonete Líquido Óleo De Banho Dove Glicerina 240ml Hidratação Nutrição Limpeza Suave Maciez Pele Seca",
+          "preco": 41.32,
+          "link": "https://www.magazineluiza.com.br/sabonete-liquido-oleo-de-banho-dove-glicerina-240ml-hidratacao-nutricao-limpeza-suave-maciez-pele-seca/p/keb32aej3d/me/mshp/?seller_id=redesuperpopular",
+          "fora_do_pedido": true
+        }
+      ]
+    },
+    "sabão em pó omo": {
+      "recomendacoes_ia": [
+        {
+          "produto": "Lava Roupas em Pó Omo Todo Ciclo 2,2 kg",
+          "loja": "Atacadão",
+          "preco": "R$ 21,90",
+          "preco_num": 21.9,
+          "link": "https://www.atacadao.com.br/lava-roupas-em-po-omo-todo-ciclo-17961/p",
+          "motivo": "Sai a R$ 1,00 por 100g, o mais barato entre os Omo em pó, e o pacote de 2,2kg rende bastante."
+        },
+        {
+          "produto": "Lava Roupas em Pó Omo Todo Ciclo Caixa 2kg",
+          "loja": "Muffato",
+          "preco": "R$ 20,91",
+          "preco_num": 20.91,
+          "link": "https://www.supermuffato.com.br/lava-roupas-em-po-omo-todo-ciclo-caixa-2kg/p",
+          "motivo": "Sai a R$ 1,05 por 100g, quase o mais barato, num tamanho de 2kg fácil de guardar."
+        }
+      ],
+      "produtos": [
+        {
+          "loja": "Atacadão",
+          "titulo": "Lava Roupas em Pó Omo Todo Ciclo 800g",
+          "preco": 9.9,
+          "link": "https://www.atacadao.com.br/lava-roupas-em-po-omo-todo-ciclo-18034/p"
+        },
+        {
+          "loja": "Muffato",
+          "titulo": "Omo Lavagem Todo Ciclo Sabão Em Pó Caixa 800gr",
+          "preco": 12.16,
+          "link": "https://www.supermuffato.com.br/omo-lavagem-todo-ciclo-sabao-em-po-caixa-800gr/p"
+        },
+        {
+          "loja": "Muffato",
+          "titulo": "Lava-Roupas Líquido Omo Ciclo Rápido Ação Antiodor Frasco 750ml",
+          "preco": 17.5,
+          "link": "https://www.supermuffato.com.br/lava-roupas-liquido-omo-ciclo-rapido-acao-antiodor-frasco-750ml-315233/p",
+          "fora_do_pedido": true
+        },
+        {
+          "loja": "Muffato",
+          "titulo": "Lava-Roupas Líquido Omo Ciclo Rápido Ação Total Frasco 750ml",
+          "preco": 17.5,
+          "link": "https://www.supermuffato.com.br/lava-roupas-liquido-omo-ciclo-rapido-acao-total-frasco-750ml-315231/p",
+          "fora_do_pedido": true
+        },
+        {
+          "loja": "Magalu",
+          "titulo": "Sabão em Pó Omo Lavanda 1,4kg",
+          "preco": 19.2,
+          "link": "https://www.magazineluiza.com.br/sabao-em-po-omo-lavanda-14kg/p/242058400/me/sepo/?seller_id=magazineluiza"
+        },
+        {
+          "loja": "Magalu",
+          "titulo": "Sabão em Pó Omo Todo Ciclo Fragrância Exclusiva 1,4kg",
+          "preco": 19.3,
+          "link": "https://www.magazineluiza.com.br/sabao-em-po-omo-todo-ciclo-fragrancia-exclusiva-14kg/p/242058500/me/sepo/?seller_id=magazineluiza"
+        },
+        {
+          "loja": "Atacadão",
+          "titulo": "Lava Roupas em Pó Omo Todo Ciclo 1,4kg",
+          "preco": 19.99,
+          "link": "https://www.atacadao.com.br/lava-roupas-em-po-omo-todo-ciclo-17960/p"
+        },
+        {
+          "loja": "Atacadão",
+          "titulo": "Lava Roupas em Pó Omo Puro Cuidado 1,4kg",
+          "preco": 19.99,
+          "link": "https://www.atacadao.com.br/lava-roupas-em-po-omo-puro-cuidado-17277/p"
+        },
+        {
+          "loja": "Muffato",
+          "titulo": "Lava Roupas em Pó Omo Todo Ciclo Caixa 2kg",
+          "preco": 20.91,
+          "link": "https://www.supermuffato.com.br/lava-roupas-em-po-omo-todo-ciclo-caixa-2kg/p"
+        },
+        {
+          "loja": "Atacadão",
+          "titulo": "Lava Roupas em Pó Omo Todo Ciclo 2,2 kg",
+          "preco": 21.9,
+          "link": "https://www.atacadao.com.br/lava-roupas-em-po-omo-todo-ciclo-17961/p"
+        },
+        {
+          "loja": "Amazon",
+          "titulo": "Lava-Roupas em Pó Omo Puro Cuidado, 2kg",
+          "preco": 23.73,
+          "link": "https://www.amazon.com.br/Lava-Roupas-Omo-Puro-Cuidado-Caixa/dp/B0HD2DR2YP/ref=sr_1_4?dib=eyJ2IjoiMSJ9.fS-wmI2Mr7Y5iUIXNDJHsz5iI1sULDHR5Zi9pT-6dHwwJe71fMCmcFPbDc2l-zmwCtLv8hELL-LhgizuVdB1qyi60rL14nnDdFmxjfypV0OK71MzJ2HcWwG1B8qeXqwlm--wBCCz47Sgc3lFnDid7Up2stl3Tl4SChzUmy9G83Cri0LheajrdMkoL6zPDR-Xea7UpPkCgNE2I-oaiiezlBjKuJemBvVFaNHW9hO7TdKQ1e7cvCqYDYi-UmDe8XPaMNkaInGQoLtpJC_8_rGrcp5RvbZ1lZRSXL5nMoCJxMI.ouHOqfhfsZSEULOhA4xWcgCQ0w-YLqbKkIVAdWxIAoM&dib_tag=se&keywords=sab%C3%A3o+em+p%C3%B3+omo&qid=1793842710&sr=8-4"
+        },
+        {
+          "loja": "Amazon",
+          "titulo": "Lava-roupas em Pó Omo Lavanda Caixa 1,4kg",
+          "preco": 27.9,
+          "link": "https://www.amazon.com.br/sspa/click?ie=UTF8&spc=MTozNjk2NjQ2MTc1NDM0NTUxOjE3OTM4NDI3MTA6c3BfYXRmOjMwMTYyOTQ1OTAyNzYwMjo6MDo6&url=%2FLava-roupas-Omo-Lavanda-Caixa-4kg%2Fdp%2FB0HDTR35T8%2Fref%3Dsr_1_1_sspa%3Fdib%3DeyJ2IjoiMSJ9.fS-wmI2Mr7Y5iUIXNDJHsz5iI1sULDHR5Zi9pT-6dHwwJe71fMCmcFPbDc2l-zmwCtLv8hELL-LhgizuVdB1qyi60rL14nnDdFmxjfypV0OK71MzJ2HcWwG1B8qeXqwlm--wBCCz47Sgc3lFnDid7Up2stl3Tl4SChzUmy9G83Cri0LheajrdMkoL6zPDR-Xea7UpPkCgNE2I-oaiiezlBjKuJemBvVFaNHW9hO7TdKQ1e7cvCqYDYi-UmDe8XPaMNkaInGQoLtpJC_8_rGrcp5RvbZ1lZRSXL5nMoCJxMI.ouHOqfhfsZSEULOhA4xWcgCQ0w-YLqbKkIVAdWxIAoM%26dib_tag%3Dse%26keywords%3Dsab%25C3%25A3o%2Bem%2Bp%25C3%25B3%2Bomo%26qid%3D1793842710%26sr%3D8-1-spons%26sp_csd%3Dd2lkZ2V0TmFtZT1zcF9hdGY%26psc%3D1"
+        },
+        {
+          "loja": "Amazon",
+          "titulo": "OMO Sabão Em Pó Lavagem Perfeita 2.2Kg",
+          "preco": 27.98,
+          "link": "https://www.amazon.com.br/Sab%C3%A3o-OMO-Lavagem-Perfeita-2-2kg/dp/B08R9XTH39/ref=sr_1_5?dib=eyJ2IjoiMSJ9.fS-wmI2Mr7Y5iUIXNDJHsz5iI1sULDHR5Zi9pT-6dHwwJe71fMCmcFPbDc2l-zmwCtLv8hELL-LhgizuVdB1qyi60rL14nnDdFmxjfypV0OK71MzJ2HcWwG1B8qeXqwlm--wBCCz47Sgc3lFnDid7Up2stl3Tl4SChzUmy9G83Cri0LheajrdMkoL6zPDR-Xea7UpPkCgNE2I-oaiiezlBjKuJemBvVFaNHW9hO7TdKQ1e7cvCqYDYi-UmDe8XPaMNkaInGQoLtpJC_8_rGrcp5RvbZ1lZRSXL5nMoCJxMI.ouHOqfhfsZSEULOhA4xWcgCQ0w-YLqbKkIVAdWxIAoM&dib_tag=se&keywords=sab%C3%A3o+em+p%C3%B3+omo&qid=1793842710&sr=8-5"
+        },
+        {
+          "loja": "Americanas",
+          "titulo": "Sabão em Pó Omo Lavagem Perfeita Concentrado Sachê 1,6kg",
+          "preco": 27.99,
+          "link": "https://www.americanas.com.br/sabao-em-po-omo-lavagem-perfeita-sache-1-6kg-1741670968/p"
+        },
+        {
+          "loja": "Americanas",
+          "titulo": "Sabão em Pó Omo Lavagem Perfeita 1,6kg",
+          "preco": 27.99,
+          "link": "https://www.americanas.com.br/sabao-em-po-omo-lavagem-perfeita-1-6kg-74190995/p"
+        },
+        {
+          "loja": "Americanas",
+          "titulo": "Sabão em Pó Hipoalergênico Omo Puro Cuidado Concentrado Suave 1,6kg",
+          "preco": 27.99,
+          "link": "https://www.americanas.com.br/sabao-em-po-omo-puro-cuidado-1-6kg-74189450/p"
+        },
+        {
+          "loja": "Magalu",
+          "titulo": "Sabão em Pó Omo Puro Cuidado 2,2Kg",
+          "preco": 28.99,
+          "link": "https://www.magazineluiza.com.br/sabao-em-po-omo-puro-cuidado-22kg/p/237304100/me/sepo/?seller_id=magazineluiza"
+        },
+        {
+          "loja": "Americanas",
+          "titulo": "Sabão em Pó Omo Lavagem Perfeita 2,2kg",
+          "preco": 29.99,
+          "link": "https://www.americanas.com.br/lava-roupas-sabao-em-po-omo-lavagem-perfeita-2-2kg-tamanho-familia-7492375245/p"
+        },
+        {
+          "loja": "Americanas",
+          "titulo": "Sabão em Pó Concentrado OMO Lavagem Perfeita 2,2kg",
+          "preco": 29.99,
+          "link": "https://www.americanas.com.br/lava-roupas-sabao-em-po-omo-lavagem-perfeita-2-2kg-tamanho-familia-7490534801/p"
+        },
+        {
+          "loja": "Muffato",
+          "titulo": "Sabão em Pó Omo Lavagem Perfeita Sachê 2,4Kg",
+          "preco": 31.4,
+          "link": "https://www.supermuffato.com.br/sabao-em-po-omo-lavagem-perfeita-sache-24kg-250737/p"
+        }
+      ]
+    }
+  }
+}

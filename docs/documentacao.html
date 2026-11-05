@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Documentação Técnica — Radar de Preços</title>
+<meta name="description" content="Documentação técnica do Radar de Preços: arquitetura, lojas, preço por unidade, IA, histórico, painel, operação e manutenção.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+
+<header class="topo">
+  <div class="topo-dentro">
+    <h1>📘 Documentação Técnica</h1>
+    <p class="sub">Radar de Preços: como o sistema está organizado, como cada parte funciona, como operar no dia a dia e por que cada decisão foi tomada.</p>
+    <div class="badges">
+      <span class="badge">🐍 Python 3.11</span>
+      <span class="badge">📊 Streamlit</span>
+      <span class="badge">🌐 Playwright + CDP</span>
+      <span class="badge">🤖 DeepSeek</span>
+      <span class="badge">🗂️ SQLite</span>
+    </div>
+    <div class="acoes">
+      <a class="botao amarelo" href="index.html">Apresentação</a>
+      <a class="botao contorno" href="https://github.com/new-emi/Radar-de-Precos">Código no GitHub</a>
+    </div>
+  </div>
+</header>
+
+<main class="miolo estreito doc">
+
+<nav class="sumario" aria-label="Sumário">
+  <h2>Sumário</h2>
+  <ol>
+    <li><a href="#visao">Visão geral</a></li>
+    <li><a href="#arquitetura">Arquitetura</a></li>
+    <li><a href="#lojas">Lojas e coleta</a></li>
+    <li><a href="#unidades">Preço por unidade</a></li>
+    <li><a href="#ia">A IA</a></li>
+    <li><a href="#historico">Histórico (SQLite)</a></li>
+    <li><a href="#painel">O painel</a></li>
+    <li><a href="#operacao">Operação no dia a dia</a></li>
+    <li><a href="#manutencao">Manutenção</a></li>
+    <li><a href="#problemas">Problemas comuns</a></li>
+    <li><a href="#seguranca">Segurança</a></li>
+    <li><a href="#decisoes">Histórico de decisões</a></li>
+    <li><a href="#zero">Reconstruir do zero</a></li>
+  </ol>
+</nav>
+
+<section id="visao">
+  <h2>1. Visão geral</h2>
+  <p>O Radar de Preços compara a lista de compras da casa em cinco lojas online. Ele tem duas partes, que conversam por arquivos:</p>
+  <ul>
+    <li><strong>O robô</strong> (<code>robo.py</code>) faz a busca: lê a lista, consulta as lojas, calcula o preço por unidade, chama a IA e grava o resultado.</li>
+    <li><strong>O painel</strong> (<code>painel.py</code>) é o site: mostra as ofertas, permite editar a lista e dispara a busca com progresso ao vivo.</li>
+  </ul>
+  <div class="aviso verde"><b>Regra de ouro</b>A IA nunca escreve preço, nome ou link. Ela só aponta os números (ids) das ofertas que o robô coletou. O que aparece na tela é sempre o dado real da loja.</div>
+</section>
+
+<section id="arquitetura">
+  <h2>2. Arquitetura</h2>
+  <div class="diagrama"><img src="img/arquitetura.svg" alt="Diagrama: lista.txt e o Agendador alimentam o robo.py, que consulta as lojas VTEX e as lojas via Chrome, calcula o preço por unidade, chama a IA e grava o JSON do dia e o histórico, lidos pelo painel."></div>
+  <h3>Arquivos e responsabilidades</h3>
+  <table>
+    <thead><tr><th>Arquivo</th><th>O que faz</th></tr></thead>
+    <tbody>
+      <tr><td><code>robo.py</code></td><td>Orquestra a busca. Imprime marcadores (<code>ETAPA_ML</code>, <code>PAUSA_VERIFICACAO</code>, <code>[1/37]</code>) que o painel lê para mostrar o progresso.</td></tr>
+      <tr><td><code>painel.py</code></td><td>Interface Streamlit: Ofertas, Lista de compras e Buscar preços.</td></tr>
+      <tr><td><code>radar/config.py</code></td><td>Caminhos dos arquivos e leitura do <code>.env</code> (relido a cada uso).</td></tr>
+      <tr><td><code>radar/lojas/</code></td><td>Um arquivo por loja e o cadastro em <code>__init__.py</code>.</td></tr>
+      <tr><td><code>radar/unidades.py</code></td><td>Lê a quantidade no título e calcula o preço por unidade.</td></tr>
+      <tr><td><code>radar/ia.py</code></td><td>Prompt, chamada ao DeepSeek e novas tentativas.</td></tr>
+      <tr><td><code>radar/banco.py</code></td><td>Grava cada busca e responde às consultas de histórico.</td></tr>
+      <tr><td><code>radar/navegador.py</code></td><td>Detecta e abre o Chrome do robô.</td></tr>
+      <tr><td><code>radar/texto.py</code></td><td>Limpeza de títulos e leitura de preços em texto.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="lojas">
+  <h2>3. Lojas e coleta</h2>
+  <table>
+    <thead><tr><th>Loja</th><th>Como</th><th>Observação</th></tr></thead>
+    <tbody>
+      <tr><td>Americanas, Atacadão, Muffato</td><td>API VTEX (<code>intelligent-search/product_search</code>)</td><td>JSON, em paralelo; descarta sem estoque e sem preço.</td></tr>
+      <tr><td>Magalu</td><td>Chrome do robô (CDP)</td><td>Título lido do card; o da URL é marcado como aproximado.</td></tr>
+      <tr><td>Amazon</td><td>Chrome do robô (CDP)</td><td>Espera o primeiro resultado aparecer (até 15 s).</td></tr>
+      <tr><td>Mercado Livre</td><td>Desligado (<code>ML_ATIVO=0</code>)</td><td>Captcha no site e API bloqueada (403). Quando ligado, pausa para uma pessoa resolver.</td></tr>
+    </tbody>
+  </table>
+  <h3>Por que um Chrome "de verdade"</h3>
+  <p>Magalu e Amazon bloqueiam pedidos feitos por script. O robô se conecta (<code>connect_over_cdp</code>) a um Chrome normal aberto com <code>--remote-debugging-port=9222</code> e um perfil próprio (<code>C:\ChromePerfilTeste</code>). Para os sites, é uma pessoa navegando. O robô abre esse Chrome sozinho se ele estiver fechado.</p>
+  <h3>Paralelismo</h3>
+  <p>As buscas VTEX são só pedidos HTTP, então são disparadas todas de uma vez num <code>ThreadPoolExecutor</code>, enquanto o Chrome, que faz uma coisa por vez, cuida de Magalu e Amazon. As chamadas à IA também rodam em paralelo: o robô segue para o próximo item enquanto ela responde.</p>
+</section>
+
+<section id="unidades">
+  <h2>4. Preço por unidade</h2>
+  <p>O <code>radar/unidades.py</code> usa expressões regulares para achar a quantidade no título e converte tudo para a mesma régua dentro de cada item.</p>
+  <table>
+    <thead><tr><th>Título</th><th>Quantidade</th><th>Régua</th></tr></thead>
+    <tbody>
+      <tr><td>Amaciante Comfort 1,5L</td><td>1500 ml</td><td>R$/L</td></tr>
+      <tr><td>Protetor Solar Facial FPS50 50ml</td><td>50 ml</td><td>R$/100ml (item de frasco pequeno)</td></tr>
+      <tr><td>Creme Dental Colgate 180g 3 un</td><td>540 g</td><td>R$/100g</td></tr>
+      <tr><td>Papel Toalha Scala 3x120fls</td><td>360 folhas</td><td>R$/100 folhas</td></tr>
+      <tr><td>Papel Higiênico 20m 12 Unidades</td><td>240 m</td><td>R$/10m</td></tr>
+      <tr><td>Saco de Lixo 50L 50un</td><td>50 un</td><td>R$/un ("50L" é capacidade)</td></tr>
+      <tr><td>Veja 500ml com 10% de desconto</td><td>500 ml</td><td>R$/L ("10%" não é quantidade)</td></tr>
+    </tbody>
+  </table>
+  <div class="aviso"><b>Uma régua por item</b>Se a <em>mediana</em> dos volumes do item fica abaixo de 1 litro, o item inteiro usa R$/100ml. Assim protetor solar não aparece como "R$ 539,80/L", e todos os produtos do item ficam comparáveis.</div>
+  <p>Preços por unidade absurdamente baixos (menos de 1/4 da mediana do item) são escondidos no painel. Quase sempre vêm de título sem vírgula, como "15l" no lugar de "1,5l".</p>
+</section>
+
+<section id="ia">
+  <h2>5. A IA</h2>
+  <p>Cada item vai para o DeepSeek (<code>deepseek-chat</code>, <code>response_format=json_object</code>) com as ofertas numeradas e o preço por unidade já calculado. A resposta tem dois campos:</p>
+<pre><code>{"recomendacoes": [{"id": 0, "motivo": "Sai a R$ 13,98 o litro, o mais barato entre os Comfort."}],
+ "fora_do_pedido": [3, 7]}</code></pre>
+  <h3>O que conta como "fora do pedido"</h3>
+  <ul>
+    <li>Outro tipo de produto (absorvente na busca de protetor solar).</li>
+    <li>Outra marca, quando a marca foi pedida (Nivea na busca de sabonete Dove).</li>
+    <li>Outro formato, quando o formato foi pedido (roll-on na busca de desodorante aerossol).</li>
+  </ul>
+  <h3>O que não conta</h3>
+  <p>Outra versão ou fragrância (Men, Clinical, Cotton), outro tamanho, kit, refil ou "leve mais pague menos". O prompt também proíbe supor quem vai usar o produto.</p>
+  <h3>Robustez</h3>
+  <ul>
+    <li>Até 3 tentativas por item, com espera crescente (2 s, 4 s, 6 s), se a resposta vier vazia, com id inválido ou fora do formato.</li>
+    <li>Um produto escolhido nunca fica marcado como "fora do pedido".</li>
+    <li>Para testar mudanças no prompt sem refazer a busca: <code>python scripts\avaliar_ia.py "item"</code>.</li>
+  </ul>
+</section>
+
+<section id="historico">
+  <h2>6. Histórico (SQLite)</h2>
+  <p>O <code>historico.db</code> é um banco SQLite: um arquivo só, sem servidor, lido com o módulo <code>sqlite3</code> da biblioteca padrão.</p>
+  <table>
+    <thead><tr><th>Tabela</th><th>Colunas</th></tr></thead>
+    <tbody>
+      <tr><td><code>buscas</code></td><td><code>id</code>, <code>data</code></td></tr>
+      <tr><td><code>precos</code></td><td><code>busca_id</code> (chave estrangeira), <code>termo</code>, <code>loja</code>, <code>titulo</code>, <code>preco</code>, <code>link</code>, <code>preco_unidade</code>, <code>unidade</code>, <code>escolhido_ia</code></td></tr>
+    </tbody>
+  </table>
+  <p>O preço de cada dia é o da <strong>escolha da IA</strong>, e não o do produto mais barato da busca. Na busca de "barbeador elétrico", o mais barato é um aparelho manual que a IA descartou. O selo do painel compara o preço de hoje com a média dos dias anteriores (até 14 dias).</p>
+<pre><code>SELECT substr(b.data, 1, 10) AS dia,
+       COALESCE(MIN(CASE WHEN p.escolhido_ia = 1 THEN p.preco END), MIN(p.preco)) AS preco
+FROM precos p JOIN buscas b ON b.id = p.busca_id
+WHERE p.termo = ? GROUP BY dia ORDER BY dia;</code></pre>
+</section>
+
+<section id="painel">
+  <h2>7. O painel</h2>
+  <ul>
+    <li><strong>Ofertas:</strong> etiqueta da melhor escolha, lista de ofertas com preço por unidade e variação desde a última busca, resultados fora do pedido recolhidos e gráfico do histórico.</li>
+    <li><strong>Lista de compras:</strong> o item é salvo ao apertar Enter ou tocar fora do campo (callback <code>on_change</code>). Itens repetidos são ignorados, e tirar um item tem "Desfazer".</li>
+    <li><strong>Buscar preços:</strong> um botão. O painel abre o Chrome do robô se precisar e mostra cada item mudando de "Na fila" para "✓ 21 ofertas".</li>
+  </ul>
+  <h3>Senha só para quem vem da internet</h3>
+  <p>O painel lê o cabeçalho <code>Host</code> de cada acesso. <code>localhost</code> e a rede de casa entram direto. O endereço do túnel (<code>….trycloudflare.com</code>) pede a <code>PAINEL_SENHA</code>, comparada com <code>hmac.compare_digest</code>.</p>
+</section>
+
+<section id="operacao">
+  <h2>8. Operação no dia a dia</h2>
+  <table>
+    <thead><tr><th>Para</th><th>Faça</th></tr></thead>
+    <tbody>
+      <tr><td>Abrir o painel no PC</td><td><code>scripts\windows\abrir_painel.bat</code> e acesse <code>http://localhost:8501</code></td></tr>
+      <tr><td>Mandar um link para a família</td><td><code>scripts\windows\abrir_para_mae.bat</code> e envie o endereço <code>trycloudflare.com</code> que aparecer</td></tr>
+      <tr><td>Agendar a busca diária</td><td><code>powershell -ExecutionPolicy Bypass -File scripts\windows\agendar_busca.ps1 -Hora 11:00</code></td></tr>
+      <tr><td>Rodar a busca agendada agora</td><td><code>Start-ScheduledTask -TaskName "Radar de Precos"</code></td></tr>
+      <tr><td>Ver o que a busca automática fez</td><td>Abra <code>busca_automatica.log</code></td></tr>
+    </tbody>
+  </table>
+  <div class="aviso"><b>O PC precisa estar ligado</b>A busca agendada e o link da família dependem do computador ligado, com o usuário logado. Se o PC estiver desligado no horário, a busca roda assim que ele ligar.</div>
+</section>
+
+<section id="manutencao">
+  <h2>9. Manutenção</h2>
+  <h3>Adicionar uma loja VTEX</h3>
+  <ol>
+    <li>Coloque a loja em <code>CANDIDATAS</code> no <code>scripts/testar_lojas_novas.py</code> e rode o script.</li>
+    <li>Se ela trouxer produtos com preço, acrescente uma linha em <code>LOJAS_VTEX</code> (<code>radar/lojas/__init__.py</code>).</li>
+    <li>Escolha uma cor para ela em <code>COR_LOJA</code> no <code>painel.py</code>.</li>
+  </ol>
+  <h3>Ajustar a IA</h3>
+  <p>As instruções ficam em <code>INSTRUCOES_SISTEMA</code> e <code>MODELO_PROMPT</code>, no <code>radar/ia.py</code>. Depois de mudar, rode <code>scripts\avaliar_ia.py</code> nos itens problemáticos e compare o antes e o depois.</p>
+  <h3>Testes</h3>
+<pre><code>python -m pip install -r requirements-dev.txt
+python -m pytest</code></pre>
+  <p>Cada erro encontrado com dados reais vira um teste (ex.: "Veja 500ml com 10% de desconto" tem que dar 500 ml).</p>
+</section>
+
+<section id="problemas">
+  <h2>10. Problemas comuns</h2>
+  <table>
+    <thead><tr><th>Sintoma</th><th>Causa provável</th><th>Solução</th></tr></thead>
+    <tbody>
+      <tr><td>Magalu e Amazon com 0 ofertas</td><td>Chrome do robô não abriu</td><td>Abra o painel e use Buscar preços (ele abre o Chrome), ou confira o caminho do Chrome em <code>radar/navegador.py</code>.</td></tr>
+      <tr><td>Item sem recomendação da IA</td><td>Chave ausente ou IA fora do ar</td><td>Confira <code>DEEPSEEK_API_KEY</code> no <code>.env</code> e o <code>busca_automatica.log</code>.</td></tr>
+      <tr><td>Painel pede senha no PC</td><td>Acesso pelo link do túnel</td><td>No PC, use <code>http://localhost:8501</code>.</td></tr>
+      <tr><td>Link da família parou</td><td>Janela do túnel fechada ou PC dormindo</td><td>Abra o <code>abrir_para_mae.bat</code> de novo e mande o link novo.</td></tr>
+      <tr><td>Painel mostra versão antiga</td><td>Painel antigo ainda na porta 8501</td><td>Os atalhos <code>.bat</code> fecham o antigo sozinhos. Abra um deles.</td></tr>
+      <tr><td>Busca agendada não roda</td><td>Tarefa aponta para o caminho antigo</td><td>Rode o <code>agendar_busca.ps1</code> de novo (ele atualiza a tarefa).</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="seguranca">
+  <h2>11. Segurança</h2>
+  <ul>
+    <li>Segredos só no <code>.env</code>, fora do Git. O <code>env.exemplo</code> lista as variáveis sem valores.</li>
+    <li>Lista, preços, histórico, registros e token do ML também ficam fora do Git (<code>.gitignore</code>).</li>
+    <li>Senha para acesso externo, e link do túnel temporário.</li>
+    <li>O robô não contorna captcha nem proteção de site: quando uma loja pede verificação, ele espera uma pessoa.</li>
+  </ul>
+</section>
+
+<section id="decisoes">
+  <h2>12. Histórico de decisões</h2>
+  <table>
+    <thead><tr><th>Decisão</th><th>Por quê</th></tr></thead>
+    <tbody>
+      <tr><td>Google Shopping descartado</td><td>Captcha de "tráfego incomum" mesmo com stealth e perfil persistente.</td></tr>
+      <tr><td>API VTEX em vez de HTML</td><td>JSON estável e com estoque. O endpoint clássico dava 400 com termos genéricos.</td></tr>
+      <tr><td>14 lojas testadas antes de cadastrar</td><td>Muffato 9/9 com preço (entrou). Carrefour e Drogasil 503, Nissei 404, Beleza na Web 403. Drogaria São Paulo e Pacheco têm o mesmo catálogo.</td></tr>
+      <tr><td>Mercado Livre desligado</td><td>Captcha a cada busca no site, e a API deu 403 <code>PA_UNAUTHORIZED_RESULT_FROM_POLICIES</code> nas duas rotas de busca (04/11/2026), mesmo com login.</td></tr>
+      <tr><td>IA escolhe por id</td><td>Comparar nomes ligava a recomendação ao link errado.</td></tr>
+      <tr><td>Prompt com regras e exemplos</td><td>A versão curta escondia Rexona Men e Clinical. Reavaliado: de 9 escondidos para 0.</td></tr>
+      <tr><td>Retry com backoff na IA</td><td>4 respostas inválidas em 3 itens numa busca de 37. Todos recuperados.</td></tr>
+      <tr><td>Título da Magalu pelo card</td><td>A URL perde a vírgula: "Omo 1,4kg" virou "14kg", e a IA escolheu esse produto.</td></tr>
+      <tr><td>Histórico pela escolha da IA</td><td>Comparar o mais barato deu "↑ 1114%" no barbeador elétrico.</td></tr>
+      <tr><td>Régua por item (mediana)</td><td>"R$ 539,80/L" no protetor solar, e mistura de R$/100g com R$/L.</td></tr>
+      <tr><td>Lista salva por callback</td><td>Item digitado no celular "sumia": o formulário só salvava no botão.</td></tr>
+      <tr><td>Senha pelo cabeçalho Host</td><td>Senha para a família, sem atrapalhar quem usa no PC.</td></tr>
+    </tbody>
+  </table>
+  <p>O registro completo, com todas as lojas testadas, está em <a href="https://github.com/new-emi/Radar-de-Precos/blob/main/docs/BACKLOG.md">docs/BACKLOG.md</a>.</p>
+</section>
+
+<section id="zero">
+  <h2>13. Reconstruir do zero</h2>
+<pre><code>git clone https://github.com/new-emi/Radar-de-Precos.git
+cd Radar-de-Precos
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+copy env.exemplo .env            # preencher DEEPSEEK_API_KEY
+streamlit run painel.py          # abre com os dados de exemplo
+python robo.py                   # primeira busca de verdade
+powershell -ExecutionPolicy Bypass -File scripts\windows\agendar_busca.ps1</code></pre>
+  <p>Na primeira busca, o robô cria o <code>historico.db</code> sozinho. Para Magalu e Amazon, o Google Chrome precisa estar instalado.</p>
+</section>
+
+</main>
+
+<footer>
+  <strong>Emily Cristofoleti</strong> · estudante de Inteligência Artificial, PUCPR ·
+  <a href="index.html">Apresentação</a>
+</footer>
+
+</body>
+</html>

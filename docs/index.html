@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar de Preços</title>
+<meta name="description" content="Compara a lista de compras da casa em cinco lojas online, calcula o preço por unidade e usa IA para escolher o melhor custo-benefício.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+
+<header class="topo">
+  <div class="topo-dentro topo-grade">
+    <div>
+      <h1>🏷️ Radar de Preços</h1>
+      <p class="sub">A lista de compras da casa comparada em cinco lojas online. O robô busca, calcula o preço por unidade, e uma IA escolhe o melhor custo-benefício de cada item. O histórico diário mostra se o desconto da Black Friday é real.</p>
+      <div class="badges">
+        <span class="badge">✅ Em uso pela família</span>
+        <span class="badge">🛒 5 lojas</span>
+        <span class="badge">🤖 IA DeepSeek</span>
+        <span class="badge">🗂️ Histórico em SQLite</span>
+        <span class="badge">⏰ Busca automática diária</span>
+      </div>
+      <div class="acoes">
+        <a class="botao amarelo" href="documentacao.html">Documentação técnica</a>
+        <a class="botao contorno" href="https://github.com/new-emi/Radar-de-Precos">Código no GitHub</a>
+      </div>
+    </div>
+    <div class="moldura"><img src="img/painel-ofertas.png" alt="Painel do Radar de Preços mostrando a melhor escolha numa etiqueta amarela e as ofertas de cada loja"></div>
+  </div>
+</header>
+
+<main class="miolo">
+
+<section>
+  <h2>Visão geral</h2>
+  <div class="cartao">
+    <ul>
+      <li><strong>O que faz:</strong> procura cada item da lista em Americanas, Atacadão, Muffato, Magalu e Amazon, calcula o preço por litro, por 100 g, por 10 m ou por unidade, e pede a uma IA as duas melhores compras de cada item.</li>
+      <li><strong>Para quem:</strong> quem faz a compra do mês de casa, higiene e limpeza e quer saber onde cada item sai mais barato, sem abrir cinco sites.</li>
+      <li><strong>O que entrega:</strong> um painel web, que funciona no celular, com a melhor escolha de cada item, todas as ofertas comparáveis, o total da lista e o gráfico do preço ao longo dos dias.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>O problema e a solução</h2>
+  <p class="intro">Comparar uma lista de 37 itens em cinco lojas exige 185 buscas. E os preços não se comparam direto: amaciante de 500 ml contra galão de 5 L, papel higiênico de 12 rolos de 20 m contra 24 rolos de 30 m. A busca das lojas ainda devolve produtos que não têm nada a ver com o pedido.</p>
+  <ol class="etapas">
+    <li><strong>Lista</strong><span>A família edita a lista no painel, pelo celular ou pelo computador.</span></li>
+    <li><strong>Coleta</strong><span>Lojas VTEX pela API, em paralelo. Magalu e Amazon por um Chrome real.</span></li>
+    <li><strong>Preço por unidade</strong><span>Expressões regulares leem "1,5L", "3x120fls" e "kit 3 un" no título.</span></li>
+    <li><strong>Curadoria por IA</strong><span>Tira o que não é o produto pedido e escolhe as duas melhores compras.</span></li>
+    <li><strong>Histórico</strong><span>Cada busca vai para o SQLite, e o painel mostra a variação e o gráfico.</span></li>
+  </ol>
+</section>
+
+<section>
+  <h2>O painel</h2>
+  <p class="intro">A melhor escolha aparece numa etiqueta amarela, como as de gôndola de supermercado. Ao lado ficam todas as ofertas, com o preço por unidade. O que a IA tirou da comparação fica recolhido no fim da lista.</p>
+  <div class="galeria">
+    <figure><img src="img/painel-lista.png" alt="Aba Lista de compras com os itens e o melhor preço da última busca"><figcaption>Lista de compras: adicionar, tirar (com desfazer) e pedir à IA nomes melhores.</figcaption></figure>
+    <div class="coluna">
+      <figure><img src="img/painel-celular.png" alt="Painel aberto no celular"><figcaption>No celular, a família acessa por um link com senha.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Decisões que vieram de erros reais</h2>
+  <p class="intro">Cada decisão abaixo veio de um problema observado com dados de verdade. A lista completa, com as medições, está na <a href="documentacao.html#decisoes">documentação</a>.</p>
+  <div class="decisoes">
+    <div class="decisao">
+      <h3>A IA estava supondo coisas</h3>
+      <div class="antes"><b>Antes</b>No desodorante Rexona, ela escondia as versões Men e Clinical: imaginou que fosse para mulher.</div>
+      <div class="depois"><b>Depois</b>Prompt com regras e exemplos do que conta e do que não conta como "outro produto". Escondidos: de 9 para 0.</div>
+    </div>
+    <div class="decisao">
+      <h3>A comparação errada do histórico</h3>
+      <div class="antes"><b>Antes</b>O barbeador elétrico aparecia "↑ 1114%", comparado com um aparelho manual de R$ 9,90.</div>
+      <div class="depois"><b>Depois</b>O histórico segue o preço da escolha da IA de cada dia, não o do produto mais barato da busca.</div>
+    </div>
+    <div class="decisao">
+      <h3>O título que perdeu a vírgula</h3>
+      <div class="antes"><b>Antes</b>Na Magalu, "Omo 1,4kg" virava "14kg" pela URL, e a IA escolheu esse produto pelo preço por kg errado.</div>
+      <div class="depois"><b>Depois</b>O título vem do card. Título tirado da URL é marcado como aproximado e fica sem preço por unidade.</div>
+    </div>
+    <div class="decisao">
+      <h3>O Mercado Livre e o captcha</h3>
+      <div class="antes"><b>Antes</b>Captcha a cada busca no site, e a API oficial deu 403 nas duas rotas de busca, mesmo com login válido.</div>
+      <div class="depois"><b>Depois</b>O ML fica desligado. Quando ligado, o robô pausa e espera uma pessoa resolver: ele não contorna a proteção.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Em números</h2>
+  <div class="numeros">
+    <div class="numero"><b>757</b><span>ofertas na busca agendada de 37 itens</span></div>
+    <div class="numero"><b>~9 min</b><span>para 37 itens em 5 lojas, com threads</span></div>
+    <div class="numero"><b>~90%</b><span>das ofertas com preço por unidade</span></div>
+    <div class="numero"><b>37</b><span>testes automáticos, sem internet</span></div>
+  </div>
+</section>
+
+<section>
+  <h2>Stack</h2>
+  <div class="stack">
+    <div><strong>Python 3.11</strong><span>robô e pacote radar/</span></div>
+    <div><strong>Streamlit</strong><span>painel web</span></div>
+    <div><strong>Playwright + CDP</strong><span>Chrome real para Magalu e Amazon</span></div>
+    <div><strong>curl_cffi</strong><span>API VTEX com assinatura de Chrome</span></div>
+    <div><strong>DeepSeek</strong><span>curadoria das ofertas em JSON</span></div>
+    <div><strong>SQLite</strong><span>histórico diário de preços</span></div>
+    <div><strong>Agendador do Windows</strong><span>busca automática todo dia</span></div>
+    <div><strong>Cloudflare Tunnel</strong><span>link temporário para a família</span></div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <strong>Emily Cristofoleti</strong> · estudante de Inteligência Artificial, PUCPR ·
+  <a href="https://github.com/new-emi/Radar-de-Precos">github.com/new-emi/Radar-de-Precos</a>
+</footer>
+
+</body>
+</html>

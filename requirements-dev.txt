@@ -1,0 +1,4 @@
+# Para quem vai mexer no código: as dependências do projeto + ferramentas de teste
+-r requirements.txt
+pytest>=8
+pyflakes>=3
