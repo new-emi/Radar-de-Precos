@@ -8,6 +8,7 @@ dados_black_friday.json
 historico.db
 busca_automatica.log
 debug_ml.*
+docs/black-friday-demo.html
 
 # ---- Ambiente e caches do Python ----
 .venv/

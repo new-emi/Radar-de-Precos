@@ -15,6 +15,9 @@ O que faz diferença para a compra de verdade.
   O histórico se enche sozinho até a Black Friday.
 - [x] **Busca mais rápida:** lojas VTEX em paralelo (threads) e esperas fixas trocadas por `wait_for_selector`.
 
+- [x] **Análise "O desconto foi real?"**: pré-registro (`docs/METODOLOGIA_BLACK_FRIDAY.md`), `radar/analise.py`,
+  `scripts/analise_black_friday.py` e testes. Falta rodar com os dados reais depois de 30/11.
+
 ## Fase 2 — Preparar o GitHub
 - [x] **Organizar o código em pastas:** pacote `radar/` com `lojas/` (um arquivo por loja), `ia.py`, `banco.py`, `unidades.py`.
 - [x] **Testes automáticos (pytest)** com dados de mentira, sem internet (37 testes).

@@ -17,7 +17,6 @@ import re
 import subprocess
 import sys
 
-import pandas as pd
 import streamlit as st
 
 from radar import banco                                     # histórico (SQLite)
@@ -25,7 +24,7 @@ from radar.config import ARQ_DADOS, ARQ_LISTA, PASTA, ler_env
 from radar.ia import criar_cliente_ia as cliente_ia
 from radar.lojas import lojas_ativas
 from radar.navegador import abrir_chrome as preparar_navegador
-from radar.texto import titulo_pela_url
+from radar.texto import chave_produto, titulo_pela_url
 from radar.unidades import item_pequeno, preco_por_unidade
 
 COR_LOJA = {"Mercado Livre": "#E0B400", "Americanas": "#E3001B", "Atacadão": "#F26A10",
@@ -271,25 +270,40 @@ def link_da_rec(rec, produtos):
     return None
 
 
+# Como dizer cada régua de comparação para quem está lendo
+REGUA_TXT = {"L": "por litro", "100g": "por 100 g", "100 folhas": "por 100 folhas", "10m": "por 10 m",
+             "un": "por unidade", "preco": ""}
+
+
 def selo_historico(termo, info):
-    """Selo ao lado do nome do item: quanto o melhor preço de hoje mudou em relação aos dias anteriores."""
+    """Selo ao lado do nome do item: quanto a melhor escolha de hoje mudou em relação aos dias anteriores.
+    A comparação é pelo preço por unidade (a melhor escolha pode ser outro tamanho de embalagem);
+    veja banco.variacao."""
     hoje, _ = melhor_do_item(info)
     try:
-        var = banco.variacao(termo, hoje)
+        var = banco.variacao(termo)
         menor = banco.menor_ja_visto(termo)
+        n_dias = len(banco.historico_diario(termo, 15))
     except Exception:
         return ""
-    if var is None:
+    if n_dias < 2:
         return '<span class="selo neutro">Primeiro dia de histórico</span>'
-    if var <= -1:
-        selo = f'<span class="selo caiu">↓ {abs(var):.0f}% abaixo dos últimos dias</span>'
-    elif var >= 1:
-        selo = f'<span class="selo subiu">↑ {var:.0f}% acima dos últimos dias</span>'
+    if var is None:
+        selo = ""          # a melhor escolha mudou para um produto que não dá para comparar
     else:
-        selo = '<span class="selo neutro">Preço estável</span>'
+        pequeno = item_pequeno([p["titulo"] for p in info.get("produtos", []) if not p.get("titulo_aproximado")])
+        # a % é a mesma por litro ou por 100 ml; o texto acompanha o que o painel mostra nas ofertas
+        regua = "por 100 ml" if (var["regua"] == "L" and pequeno) else REGUA_TXT.get(var["regua"], "")
+        extra = f" ({regua})" if regua else ""
+        if var["pct"] <= -1:
+            selo = f'<span class="selo caiu">↓ {abs(var["pct"]):.0f}% abaixo dos últimos dias{extra}</span>'
+        elif var["pct"] >= 1:
+            selo = f'<span class="selo subiu">↑ {var["pct"]:.0f}% acima dos últimos dias{extra}</span>'
+        else:
+            selo = '<span class="selo neutro">Preço estável</span>'
     if menor and hoje and menor[0] < hoje - 0.009:
         dia = f"{menor[1][8:10]}/{menor[1][5:7]}"
-        selo += f' <span class="selo neutro">Já esteve {preco_txt(menor[0])} em {dia}</span>'
+        selo += f' <span class="selo neutro">Este produto já custou {preco_txt(menor[0])} em {dia}</span>'
     return selo
 
 
@@ -327,17 +341,100 @@ def ordenar(produtos, modo):
     return sorted(produtos, key=chave)
 
 
-def grafico_historico(termo):
+def serie_do_grafico(termo, pequeno=False):
+    """Os pontos do gráfico: [(dia, valor, dica)], o rótulo da régua e a explicação embaixo.
+    Usa o preço por unidade quando dá (a embalagem da melhor escolha muda entre os dias);
+    senão, o preço dos dias em que a comparação faz sentido (veja banco.comparaveis)."""
+    hist = banco.escolhas_por_dia(termo, 30)
+    if not hist:
+        return [], "", ""
+    hoje = hist[-1]
+    regua, pares = banco.comparaveis(hoje, hist[:-1])
+    pares.append((hoje["dia"], hoje["pu"] if regua != "preco" else hoje["preco"]))
+    por_dia = {e["dia"]: e for e in hist}
+    fator, rot = 1, regua
+    if regua == "L" and pequeno:           # frasco pequeno: o painel mostra por 100 ml
+        fator, rot = 10, "100ml"
+    pontos = []
+    for dia, v in pares:
+        e = por_dia[dia]
+        dica = f"{e['titulo']} · {preco_txt(e['preco'])} {na_loja(e['loja'])}"
+        pontos.append((dia, v / fator, dica))
+    if regua == "preco":
+        nota = "Preço da melhor escolha em cada dia."
+    else:
+        nota = (f"Preço {REGUA_TXT.get(regua, '')} da melhor escolha em cada dia" if rot != "100ml"
+                else "Preço por 100 ml da melhor escolha em cada dia")
+        nota += ". A melhor escolha pode ser outro tamanho de embalagem de um dia para o outro, por isso a comparação é por unidade."
+    return pontos, ("" if regua == "preco" else rot), nota
+
+
+def grafico_historico(termo, pequeno=False):
     try:
-        hist = banco.historico_diario(termo, 30)
+        pontos, rot, nota = serie_do_grafico(termo, pequeno)
+        n_dias = len(banco.historico_diario(termo, 30))
     except Exception:
-        hist = []
-    if len(hist) < 2:
-        st.caption("O gráfico aparece a partir do segundo dia de busca. A busca automática diária enche o histórico sozinha.")
+        pontos, rot, nota, n_dias = [], "", "", 0
+    if len(pontos) < 2:
+        if n_dias == 1:
+            dia = f"{pontos[0][0][8:10]}/{pontos[0][0][5:7]}"
+            st.caption(f"Por enquanto este item só tem preço de **um dia** ({dia}). O gráfico aparece a partir do "
+                       "segundo dia, e a busca automática diária enche o histórico sozinha. "
+                       "Se o nome do item mudar (ex.: “shampoo dove” → “shampoo dove 400ml”), o histórico começa de novo.")
+        elif n_dias > 1:
+            st.caption("A melhor escolha de hoje é um produto diferente dos outros dias, e o título não diz a quantidade "
+                       "para comparar por unidade. O gráfico volta quando houver mais dias comparáveis.")
+        else:
+            st.caption("Este item ainda não tem histórico de preço.")
         return
-    df = pd.DataFrame(hist, columns=["Dia", "Melhor escolha (R$)", "Loja"])
-    df["Dia"] = pd.to_datetime(df["Dia"])
-    st.line_chart(df, x="Dia", y="Melhor escolha (R$)", color="#17804A", height=220)
+    # No Markdown do Streamlit, texto entre dois "$" vira fórmula matemática (LaTeX).
+    # Trocando "$" pelo código HTML "&#36;", o navegador mostra o cifrão e o Markdown não monta fórmula.
+    mostrar(svg_historico(pontos, rot).replace("$", "&#36;"))
+    st.caption(nota)
+
+
+def svg_historico(pontos, rot=""):
+    """Desenha o gráfico de linha em SVG, à mão (sem pandas): o Controle Inteligente de Aplicativos
+    do Windows bloqueia as partes compiladas do pandas. SVG é só texto, então nada é bloqueado.
+
+    pontos = [(dia, valor, dica)]; rot = a unidade do eixo ("L", "100g"...) ou "" para preço.
+    Ideia: cada dia vira um ponto (x = posição do dia, y = valor). O SVG desenha a linha ligando
+    os pontos; o eixo y vai do menor ao maior valor (com folga), para a variação ficar visível."""
+    larg, alt, esq, dir_, topo, base = 640, 200, 92 if rot else 64, 24, 22, 34
+    valores = [v for _, v, _ in pontos]
+    lo, hi = min(valores), max(valores)
+    folga = (hi - lo) * 0.15 or hi * 0.05 or 1
+    lo, hi = max(0, lo - folga), hi + folga
+    sufixo = f"/{rot}" if rot else ""
+
+    def x(i):
+        return esq + (larg - esq - dir_) * (i / (len(pontos) - 1))
+
+    def y(v):
+        return topo + (alt - topo - base) * (1 - (v - lo) / (hi - lo))
+
+    linha = " ".join(f"{x(i):.1f},{y(v):.1f}" for i, (_, v, _) in enumerate(pontos))
+    area = f"{x(0):.1f},{alt - base} {linha} {x(len(pontos) - 1):.1f},{alt - base}"
+    # 4 linhas de grade; se duas caem no mesmo valor em centavos (ex.: R$ 0,40/un e R$ 0,40/un), só uma fica
+    marcas = {}
+    for v in (lo + (hi - lo) * k / 3 for k in range(4)):
+        marcas.setdefault(preco_txt(v), v)
+    grade = "".join(
+        f'<line x1="{esq}" x2="{larg - dir_}" y1="{y(v):.1f}" y2="{y(v):.1f}" stroke="#DCE3DC" stroke-width="1"/>'
+        f'<text x="{esq - 8}" y="{y(v) + 4:.1f}" text-anchor="end" fill="#5F6C64" font-size="12" font-family="Instrument Sans, sans-serif">{txt}{esc(sufixo)}</text>'
+        for txt, v in marcas.items())
+    dias = "".join(
+        f'<text x="{x(i):.1f}" y="{alt - 10}" text-anchor="middle" fill="#5F6C64" font-size="12" font-family="Instrument Sans, sans-serif">{d[8:10]}/{d[5:7]}</text>'
+        for i, (d, _, _) in enumerate(pontos) if len(pontos) <= 8 or i in (0, len(pontos) - 1) or i % 5 == 0)
+    bolinhas = "".join(
+        f'<circle cx="{x(i):.1f}" cy="{y(v):.1f}" r="{5 if i == len(pontos) - 1 else 3.2}" fill="#FFFFFF" stroke="#17804A" stroke-width="2">'
+        f'<title>{d[8:10]}/{d[5:7]}: {preco_txt(v)}{esc(sufixo)} · {esc(dica)}</title></circle>'
+        for i, (d, v, dica) in enumerate(pontos))
+    ultimo = pontos[-1][1]
+    return (f'<svg class="grafico" style="width:100%;height:auto;display:block" viewBox="0 0 {larg} {alt}" role="img" '
+            f'aria-label="Preço da melhor escolha nos últimos {len(pontos)} dias; hoje {preco_txt(ultimo)}{esc(sufixo)}">'
+            f'{grade}<polygon points="{area}" fill="#DDF0E3" opacity="0.6"/><polyline points="{linha}" fill="none" stroke="#17804A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>'
+            f'{bolinhas}{dias}</svg>')
 
 
 def mostrar_item(termo, info, modo="Menor preço"):
@@ -377,7 +474,7 @@ def mostrar_item(termo, info, modo="Menor preço"):
             mostrar('<div class="vazio">Nenhuma oferta encontrada para este item.</div>')
     with dir_:
         def delta(p):
-            ant = antes.get(p["link"])
+            ant = antes.get(chave_produto(p["link"], p["loja"]))
             if ant is None or abs(ant - p["preco"]) < 0.01:
                 return ""
             caiu = p["preco"] < ant
@@ -402,7 +499,7 @@ def mostrar_item(termo, info, modo="Menor preço"):
                           f'<ol class="ofertas">{"".join(linha(p) for p in fora)}</ol></details>')
         mostrar(f'<ol class="ofertas">{"".join(linha(p) for p in produtos)}</ol>{bloco_fora}')
         with st.expander("📈 Histórico de preço"):
-            grafico_historico(termo)
+            grafico_historico(termo, item_pequeno([p["titulo"] for p in produtos if not p.get("titulo_aproximado")]))
 
 
 with aba_ofertas:

@@ -1,0 +1,28 @@
+# Lista do estudo "O desconto da Black Friday foi real?" — CONGELADA em 05/11/2026.
+# Não mude nem renomeie estes itens até 30/11: o histórico de cada um depende do nome exato.
+# O robô busca estes itens todo dia junto com a lista de compras, mas eles NÃO aparecem no painel.
+# Critérios de escolha: ver docs/METODOLOGIA_BLACK_FRIDAY.md.
+
+# grupo: casa
+creme dental colgate total 12 90g
+amaciante comfort concentrado 1,5l
+sabão em pó omo lavagem perfeita 1,6kg
+papel higiênico neve folha dupla 12 rolos
+detergente ypê neutro 500ml
+desodorante aerossol rexona 150ml
+shampoo dove reconstrução 400ml
+papel toalha snob 2 rolos
+sabonete em barra dove original 90g
+café pilão tradicional 500g
+
+# grupo: black_friday
+air fryer mondial 4l
+sanduicheira grill britânia
+panela elétrica de arroz mondial
+ferro de passar a vapor black+decker
+smart tv 43 samsung
+smartphone samsung galaxy a16 128gb
+fone jbl tune 520bt
+liquidificador oster 1400w
+cafeteira nespresso essenza mini
+echo dot 5ª geração

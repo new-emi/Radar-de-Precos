@@ -28,3 +28,9 @@ def test_vtex_ignora_sem_estoque_e_sem_preco(monkeypatch):
     res = vtex.buscar("Muffato", "https://loja.exemplo", "papel toalha")
     assert [r["titulo"] for r in res] == ["Papel Toalha 2 rolos"]
     assert res[0]["link"] == "https://loja.exemplo/papel-toalha-2-rolos/p"
+
+
+def test_lista_do_estudo_tem_dois_grupos_de_10():
+    from collections import Counter
+    from radar.config import ler_lista_estudo
+    assert Counter(ler_lista_estudo().values()) == {"casa": 10, "black_friday": 10}

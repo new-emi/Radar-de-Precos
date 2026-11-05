@@ -1,6 +1,5 @@
 # Versões fixadas (as mesmas do ambiente onde o projeto foi validado, Python 3.11)
 streamlit==1.66.1
-pandas==3.1.0
 curl_cffi==0.17.0
 beautifulsoup4==4.15.0
 lxml==6.1.3

@@ -5,6 +5,7 @@ from pathlib import Path
 # Raiz do projeto (a pasta acima de radar/): é lá que ficam lista.txt, .env e os dados gerados
 PASTA = Path(__file__).resolve().parent.parent
 ARQ_LISTA = PASTA / "lista.txt"
+ARQ_ESTUDO = PASTA / "lista_estudo.txt"          # lista fixa do estudo da Black Friday (vai para o Git)
 ARQ_DADOS = PASTA / "dados_black_friday.json"
 ARQ_BANCO = PASTA / "historico.db"
 ARQ_ENV = PASTA / ".env"
@@ -33,3 +34,16 @@ def ml_ativo():
     """O Mercado Livre fica desligado, a não ser que o .env tenha ML_ATIVO=1 (ele pede captcha)."""
     valor = ler_env().get("ML_ATIVO") or os.environ.get("ML_ATIVO", "0")
     return valor.strip().lower() in ("1", "sim", "true")
+
+
+def ler_lista_estudo():
+    """{termo: grupo} da lista do estudo. Linhas '# grupo: nome' abrem um grupo; outras '#' são comentário."""
+    grupos, atual = {}, "sem_grupo"
+    if ARQ_ESTUDO.exists():
+        for linha in ARQ_ESTUDO.read_text(encoding="utf-8").splitlines():
+            linha = linha.strip()
+            if linha.lower().startswith("# grupo:"):
+                atual = linha.split(":", 1)[1].strip()
+            elif linha and not linha.startswith("#"):
+                grupos[linha] = atual
+    return grupos

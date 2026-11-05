@@ -1,7 +1,7 @@
 # robo.py — a BUSCA do Radar de Preços (rode: python robo.py)
 #
 # Este arquivo é só o "maestro": ele chama as peças que ficam no pacote radar/ na ordem certa.
-#   1. lê a lista de compras (lista.txt)
+#   1. lê a lista de compras (lista.txt) e a lista fixa do estudo da Black Friday (lista_estudo.txt)
 #   2. busca cada item nas lojas: VTEX em paralelo (radar/lojas/vtex.py) e Magalu/Amazon
 #      pelo Chrome do robô (radar/lojas/magalu.py, amazon.py)
 #   3. a IA escolhe as melhores ofertas e tira o que não é o produto pedido (radar/ia.py)
@@ -16,7 +16,7 @@ from datetime import datetime
 from playwright.sync_api import sync_playwright
 
 from radar import banco, navegador
-from radar.config import ARQ_DADOS, ARQ_LISTA
+from radar.config import ARQ_DADOS, ARQ_LISTA, ler_lista_estudo
 from radar.ia import analisar_com_ia, criar_cliente_ia
 from radar.lojas import LOJAS_VTEX, amazon, lojas_ativas, magalu, mercado_livre, ml_api, vtex
 
@@ -26,9 +26,15 @@ def main():
         print("Erro: arquivo 'lista.txt' não encontrado.")
         return 1
     itens = [l.strip() for l in ARQ_LISTA.read_text(encoding="utf-8").splitlines() if l.strip()]
+    # Lista do estudo da Black Friday: buscada junto, mas só vai para o histórico (não para o painel)
+    da_familia = {banco.normalizar(t) for t in itens}
+    estudo = [t for t in ler_lista_estudo() if banco.normalizar(t) not in da_familia]
+    todos = itens + estudo
     client = criar_cliente_ia()
 
     print("\n🤖 Iniciando varredura...\n")
+    if estudo:
+        print(f"📊 Lista do estudo: +{len(estudo)} itens (só para o histórico da Black Friday)\n")
     banco.importar_json_se_vazio(ARQ_DADOS)   # 1ª vez: a última busca do JSON vira o 1º dia do histórico
     navegador.abrir_chrome()
     pw, browser, page = None, None, None
@@ -67,11 +73,11 @@ def main():
     # e elas vão respondendo enquanto o Chrome (que só faz uma coisa por vez) cuida de Magalu e Amazon.
     pool = ThreadPoolExecutor(max_workers=8)
     futuros_vtex = {(termo, nome): pool.submit(vtex.buscar, nome, url, termo)
-                    for termo in itens for nome, url in LOJAS_VTEX.items()}
+                    for termo in todos for nome, url in LOJAS_VTEX.items()}
     futuros_ia = {}
 
-    for i, termo in enumerate(itens, 1):
-        print(f"[{i}/{len(itens)}] {termo}...")
+    for i, termo in enumerate(todos, 1):
+        print(f"[{i}/{len(todos)}] {termo}...")
         por_loja = {
             **({"Mercado Livre": ml.get(termo, [])} if ml_ligado else {}),
             "Magalu": magalu.buscar(page, termo) if page else [],
@@ -84,7 +90,8 @@ def main():
 
         vistos, unicos = set(), []
         for loja, res in por_loja.items():
-            status_lojas[loja] += len(res)
+            if banco.normalizar(termo) in da_familia:   # o painel mostra só a lista da família
+                status_lojas[loja] += len(res)
             for r in res:
                 chave = (r["titulo"], r["preco"], r["loja"])
                 if chave not in vistos:
@@ -112,7 +119,8 @@ def main():
     saida = {
         "atualizado_em": datetime.now().strftime("%d/%m/%Y %H:%M"),
         "lojas": status_lojas,
-        "itens": resultado_itens,
+        # o arquivo do painel leva só a lista da família; o histórico (abaixo) guarda tudo
+        "itens": {t: v for t, v in resultado_itens.items() if banco.normalizar(t) in da_familia},
     }
     ARQ_DADOS.write_text(json.dumps(saida, ensure_ascii=False, indent=2), encoding="utf-8")
     try:

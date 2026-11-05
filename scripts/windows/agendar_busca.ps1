@@ -1,5 +1,5 @@
 # agendar_busca.ps1 - cria (ou atualiza) a tarefa "Radar de Precos" no Agendador de Tarefas do Windows.
-# Ela roda o buscar_precos.bat todo dia no horario escolhido.
+# Ela roda o buscar_precos.bat todo dia no horario escolhido, sem janela de terminal.
 #
 # Como usar (PowerShell, dentro da pasta do projeto):
 #   powershell -ExecutionPolicy Bypass -File scripts\windows\agendar_busca.ps1            -> todo dia as 11:00
@@ -7,10 +7,11 @@
 # Para remover:   Unregister-ScheduledTask -TaskName "Radar de Precos"
 param([string]$Hora = "11:00")
 
-$bat = Join-Path $PSScriptRoot "buscar_precos.bat"          # este arquivo fica em scripts\windows
+# A tarefa chama o .vbs, que roda o buscar_precos.bat sem janela (ninguem fecha sem querer)
+$vbs = Join-Path $PSScriptRoot "buscar_precos_oculto.vbs"   # este arquivo fica em scripts\windows
 $pasta = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)   # raiz do projeto
 
-$acao = New-ScheduledTaskAction -Execute $bat -WorkingDirectory $pasta
+$acao = New-ScheduledTaskAction -Execute "wscript.exe" -Argument "`"$vbs`"" -WorkingDirectory $pasta
 $gatilho = New-ScheduledTaskTrigger -Daily -At $Hora
 # StartWhenAvailable: se o PC estava desligado no horario, roda assim que ligar
 $config = New-ScheduledTaskSettingsSet -StartWhenAvailable -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries `

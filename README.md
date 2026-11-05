@@ -59,6 +59,7 @@ Radar-de-Precos/
 │   ├── ia.py                # Prompt e chamada ao DeepSeek (com novas tentativas)
 │   ├── unidades.py          # Quantidade no título -> R$/L, R$/100g, R$/10m, R$/un
 │   ├── banco.py             # Histórico em SQLite: gravação e consultas
+│   ├── analise.py           # "O desconto da Black Friday foi real?" (regras do pré-registro)
 │   ├── navegador.py         # Abre/detecta o Chrome do robô (porta 9222)
 │   ├── texto.py             # Limpeza de títulos e preços
 │   ├── estilo.css           # Visual do painel
@@ -72,10 +73,12 @@ Radar-de-Precos/
 ├── scripts/
 │   ├── avaliar_ia.py        # Testa o prompt da IA nos dados já coletados (segundos)
 │   ├── testar_lojas_novas.py# Descobre se uma loja candidata usa VTEX
+│   ├── analise_black_friday.py # Gera o relatório da Black Friday (docs/black-friday.html)
 │   └── windows/             # Atalhos: abrir painel, link para a família, busca agendada
-├── tests/                   # 37 testes automáticos (pytest), sem internet
+├── tests/                   # 54 testes automáticos (pytest), sem internet
 ├── exemplos/                # Dados de exemplo: o painel abre mesmo sem rodar o robô
-├── docs/                    # Site (GitHub Pages), prints e histórico de decisões
+├── docs/                    # Site (GitHub Pages), prints, histórico de decisões e metodologia da análise
+├── lista_estudo.txt         # Lista FIXA do estudo da Black Friday (casa × típicos de BF)
 ├── requirements.txt         # Dependências com versões fixadas
 ├── requirements-dev.txt     # + pytest e pyflakes
 ├── env.exemplo              # Modelo do .env (copiar para .env)
@@ -94,7 +97,7 @@ O `.env`, a `lista.txt`, o `dados_black_friday.json`, o `historico.db` e os regi
 | `curl_cffi` | 0.17.0: requisições com "assinatura" TLS de Chrome (API VTEX) |
 | `openai` | 3.43.0: cliente compatível com a API do DeepSeek |
 | `beautifulsoup4` + `lxml` | 4.15.0 / 6.1.3: leitura de HTML |
-| `pandas` | 3.1.0: gráfico de histórico |
+| Gráfico do histórico | SVG desenhado no próprio `painel.py` (sem pandas; ver seção 7) |
 | `sqlite3` | stdlib: histórico de preços |
 | DeepSeek | modelo `deepseek-chat`, `response_format=json_object` |
 | Google Chrome | aberto com `--remote-debugging-port=9222` (o robô abre sozinho) |
@@ -144,7 +147,7 @@ O registro de cada busca fica em `busca_automatica.log`. Se o PC estiver desliga
 
 ```powershell
 python -m pip install -r requirements-dev.txt
-python -m pytest                       # 37 testes, sem internet
+python -m pytest                       # 54 testes, sem internet
 python scripts\avaliar_ia.py "protetor solar facial"   # testa o prompt nos dados já coletados
 ```
 
@@ -169,6 +172,9 @@ Cada decisão abaixo veio de um problema real, observado e medido durante o dese
 - **Novas tentativas com espera (retry + backoff).** Numa busca de 37 itens, a IA devolveu 4 respostas sem recomendação válida, espalhadas em 3 itens. O robô tenta até 3 vezes, esperando 2 s, 4 s e 6 s, e todos os itens saíram com recomendação.
 - **Títulos da Magalu.** A Magalu não expõe o título num campo fixo. O fallback pela URL perde acentos e vírgulas: "Omo 1,4kg" virava "**14kg**" por R$ 19,20, e a IA escolheu esse produto. Agora o título vem do texto do card, e o da URL é marcado como `titulo_aproximado`. Nesse caso nem o painel nem a IA calculam preço por unidade.
 - **Histórico compara a melhor escolha, não o mais barato.** O selo do barbeador elétrico chegou a mostrar "↑ **1114%**": comparava o elétrico de R$ 129 escolhido pela IA com um aparelho manual de R$ 9,90. O histórico passou a seguir o preço da **escolha da IA** de cada dia.
+- **Histórico compara por unidade.** Ao conferir os selos com dados reais de dois dias, 10 dos 37 itens mostravam variações acima de 70%. A conta estava certa, mas comparava embalagens diferentes: no absorvente, a melhor escolha foi o pacote de 16 em 04/11 e o de 48 em 05/11, e o selo dizia "↑ 190%" quando, por unidade, o preço caiu 3%. Agora a comparação é pelo preço por unidade (R$/L, R$/100 g, R$/10 m), ou pelo preço quando é o mesmo produto, e "já custou R$ X" só fala do mesmo produto. O cálculo usa o valor sem arredondar: em centavos, R$ 0,406/un e R$ 0,393/un viram 0,41 e 0,39, e a diferença de 3,2% viraria 4,9%.
+- **Chave dos anúncios patrocinados da Amazon.** O link dos patrocinados é `/sspa/click?...&url=%2FProduto%2Fdp%2FB0CVXT2K1S...`, com o produto codificado dentro do link. Como a chave cortava tudo depois do `?`, 213 das 531 ofertas da Amazon viravam um único "produto". O `unquote()` decodifica o link antes de procurar o ASIN.
+- **Gráfico sem pandas.** O Controle Inteligente de Aplicativos do Windows 11, ao sair do modo de avaliação e ligar de vez, passou a bloquear um arquivo compilado do pandas (`ImportError: DLL load failed ... Uma política de Controle de Aplicativo bloqueou este arquivo`), e o painel parou de abrir. O pandas só servia para o gráfico, então o gráfico passou a ser um SVG gerado em Python puro, o que dispensou desligar uma proteção do sistema que não pode ser religada. O painel foi testado com `pandas` e `pyarrow` proibidos de carregar. No SVG, cada `$` vira `&#36;`, porque no Markdown do Streamlit um texto entre dois `$` é interpretado como fórmula LaTeX.
 - **SQLite como banco.** Uma linha por produto em cada busca, num único arquivo e com a stdlib. Duas tabelas (`buscas` e `precos`) ligadas por chave estrangeira, gravação em transação (ou grava a busca inteira, ou nada) e consultas parametrizadas (`?`).
 - **Lista salva por callback.** A mãe adicionava um item pelo celular, ia direto para a busca, e o item "sumia". Pelo horário dos arquivos, ele nunca tinha sido salvo: o campo era um formulário que só salva no botão. Agora o campo usa `on_change`, que salva ao apertar Enter ou tocar fora, mostra um aviso, ignora repetidos e tem "Desfazer" ao remover.
 - **Senha só para quem vem da internet.** O painel lê o cabeçalho `Host` do pedido. `localhost` e a rede de casa entram direto, e o endereço do túnel pede `PAINEL_SENHA`. A comparação usa `hmac.compare_digest`, que não revela pelo tempo de resposta quantas letras acertaram. O `.env` é relido a cada acesso, então tirar ou colocar a senha vale na hora.
@@ -180,7 +186,7 @@ Cada decisão abaixo veio de um problema real, observado e medido durante o dese
 | Busca agendada (04/11/2026, 16:57) | 37 itens, 5 lojas, **757 ofertas**, ~9 min |
 | Ofertas por loja nessa busca | Americanas 101 · Atacadão 124 · Muffato 162 · Magalu 185 · Amazon 185 |
 | Itens com recomendação da IA | 37 de 37 (3 recuperados por nova tentativa) |
-| Testes automáticos | 37 passando (`python -m pytest`) |
+| Testes automáticos | 54 passando (`python -m pytest`) |
 | Compatibilidade | Python 3.11 (ambiente de produção) |
 
 <p align="center">
@@ -188,7 +194,17 @@ Cada decisão abaixo veio de um problema real, observado e medido durante o dese
   <img src="docs/img/painel-celular.png" alt="Painel no celular" width="24%">
 </p>
 
-## 9. Segurança
+## 9. Black Friday 2026: o desconto foi real?
+
+O histórico diário existe para responder a uma pergunta: **os preços da Black Friday foram realmente menores, ou as lojas subiram o preço antes para anunciar um "desconto"?**
+
+- **Grupo de controle:** uma lista fixa do estudo ([`lista_estudo.txt`](lista_estudo.txt)), congelada em 05/11, com 10 itens de casa e 10 itens típicos de Black Friday, escolhidos a partir dos levantamentos dos Procons (fritadeira de 4 L, sanduicheira, smart TV 43"...). Hipótese: a maquiagem de desconto é mais comum no segundo grupo.
+- **Regras definidas antes dos dados** (pré-registro, 05/11/2026): [`docs/METODOLOGIA_BLACK_FRIDAY.md`](docs/METODOLOGIA_BLACK_FRIDAY.md). Janelas Base (05–15/11), Pré-Black Friday (16–26/11) e Black Friday (27–30/11); limiar de 5%; classes *desconto real*, *maquiagem de desconto*, *sem mudança* e *ficou mais caro*.
+- **Cada produto é acompanhado pela mesma chave ao longo dos dias.** Na Amazon é o código ASIN, porque o link muda a cada busca: 59 de 183 produtos tinham links diferentes para o mesmo item.
+- **Análise validada antes de existirem dados:** num banco simulado com padrões conhecidos (35% desconto real, 25% maquiagem...), o método recuperou as proporções esperadas. Há também 10 testes com casos feitos à mão para cada classe.
+- **Resultado:** publicado depois de 30/11 em `docs/black-friday.html`, gerado por `python scripts\analise_black_friday.py`.
+
+## 10. Segurança
 
 - Chaves (DeepSeek, Mercado Livre) só no `.env`, fora do Git. O `env.exemplo` documenta as variáveis sem valores.
 - O token OAuth do ML (`ml_token.json`) é renovado sozinho e também fica fora do Git.
@@ -196,10 +212,11 @@ Cada decisão abaixo veio de um problema real, observado e medido durante o dese
 - A IA nunca "inventa" preço ou link: ela só aponta ids de produtos que o robô coletou.
 - O robô não contorna captcha: quando uma loja pede verificação, ele espera uma pessoa resolver.
 
-## 10. Roadmap
+## 11. Roadmap
 
 - [x] Preço por unidade, histórico em SQLite, busca diária, paralelismo
 - [x] Prompt da IA com regras e exemplos + script de avaliação
+- [ ] **Publicar o resultado da análise da Black Friday** (após 30/11)
 - [ ] **Online de verdade:** banco no Supabase, painel no Streamlit Community Cloud, lojas VTEX + IA no GitHub Actions e Magalu/Amazon no PC enviando para o mesmo banco
 - [ ] Alertas (WhatsApp/Telegram) quando um item cair mais de X%
 - [ ] Títulos da Magalu pelo JSON interno da página (`__NEXT_DATA__`), em vez do texto do card
