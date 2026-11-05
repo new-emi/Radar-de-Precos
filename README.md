@@ -8,7 +8,7 @@ Projeto pessoal de **Emily Cristofoleti**, feito para a lista de compras da fam�
   <img src="docs/img/painel-ofertas.png" alt="Painel do Radar de Preços: etiqueta amarela com a melhor escolha e a lista de ofertas das lojas" width="860">
 </p>
 
-📘 **Documentação completa (site):** `docs/index.html` e `docs/documentacao.html` (publicadas pelo GitHub Pages quando o repositório estiver público)
+📘 **Documentação completa (site):** `docs/index.html` e `docs/documentacao.html`
 
 ---
 
