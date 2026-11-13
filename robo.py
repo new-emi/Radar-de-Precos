@@ -10,18 +10,27 @@
 # As linhas com ETAPA_ML, PAUSA_VERIFICACAO e [1/37] são lidas pelo painel para mostrar o progresso.
 import json
 import sys
+import time
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 
 from playwright.sync_api import sync_playwright
 
-from radar import banco, navegador
+from radar import banco, navegador, sistema
 from radar.config import ARQ_DADOS, ARQ_LISTA, ler_lista_estudo
 from radar.ia import analisar_com_ia, criar_cliente_ia
 from radar.lojas import LOJAS_VTEX, amazon, lojas_ativas, magalu, mercado_livre, ml_api, vtex
 
 
 def main():
+    # Durante a busca, o Windows não pode suspender o PC: em 12/11 ele dormiu no meio,
+    # a busca que leva ~5 min durou 4h20 e metade das lojas voltou vazia.
+    with sistema.manter_acordado():
+        return buscar_tudo()
+
+
+def buscar_tudo():
+    inicio = time.monotonic()
     if not ARQ_LISTA.exists():
         print("Erro: arquivo 'lista.txt' não encontrado.")
         return 1
@@ -35,6 +44,9 @@ def main():
     print("\n🤖 Iniciando varredura...\n")
     if estudo:
         print(f"📊 Lista do estudo: +{len(estudo)} itens (só para o histórico da Black Friday)\n")
+    if not sistema.esperar_internet():
+        print("❌ Sem internet há 5 minutos. Busca cancelada (nada foi gravado).")
+        return 1
     banco.importar_json_se_vazio(ARQ_DADOS)   # 1ª vez: a última busca do JSON vira o 1º dia do histórico
     navegador.abrir_chrome()
     pw, browser, page = None, None, None
@@ -75,6 +87,7 @@ def main():
     futuros_vtex = {(termo, nome): pool.submit(vtex.buscar, nome, url, termo)
                     for termo in todos for nome, url in LOJAS_VTEX.items()}
     futuros_ia = {}
+    falhas = []   # (item, loja) que não responderam nem depois de 3 tentativas
 
     for i, termo in enumerate(todos, 1):
         print(f"[{i}/{len(todos)}] {termo}...")
@@ -84,7 +97,11 @@ def main():
             "Amazon": amazon.buscar(page, termo) if page else [],
         }
         for nome in LOJAS_VTEX:   # .result() espera a thread terminar (quase sempre já terminou)
-            por_loja[nome] = futuros_vtex[(termo, nome)].result()
+            try:
+                por_loja[nome] = futuros_vtex[(termo, nome)].result()
+            except vtex.FalhaDeConexao:
+                por_loja[nome] = []
+                falhas.append((termo, nome))
         por_loja = {loja: por_loja[loja] for loja in ativas}   # mantém a ordem das lojas
         print("   " + " | ".join(f"{loja}: {len(r)}" for loja, r in por_loja.items()))
 
@@ -128,7 +145,11 @@ def main():
         print(f"🗂️ Busca guardada no histórico ({banco.total_de_buscas()} buscas no total).")
     except Exception as e:
         print(f"⚠️ Não consegui guardar no histórico: {e}")
-    print("\nResumo por loja:", ", ".join(f"{k}={v}" for k, v in status_lojas.items()))
+    print("\nResumo por loja (lista da família):", ", ".join(f"{k}={v}" for k, v in status_lojas.items()))
+    if falhas:
+        print(f"⚠️ {len(falhas)} buscas não responderam (sem conexão): "
+              + ", ".join(f"{loja} em “{termo}”" for termo, loja in falhas[:6]) + ("..." if len(falhas) > 6 else ""))
+    print(f"⏱️ Levou {(time.monotonic() - inicio) / 60:.1f} min.")
     print("✅ Tudo pronto!")
     return 0
 

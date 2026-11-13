@@ -61,6 +61,7 @@ Radar-de-Precos/
 │   ├── banco.py             # Histórico em SQLite: gravação e consultas
 │   ├── analise.py           # "O desconto da Black Friday foi real?" (regras do pré-registro)
 │   ├── navegador.py         # Abre/detecta o Chrome do robô (porta 9222)
+│   ├── sistema.py           # Não deixa o PC dormir durante a busca e espera a internet
 │   ├── texto.py             # Limpeza de títulos e preços
 │   ├── estilo.css           # Visual do painel
 │   └── lojas/
@@ -74,8 +75,9 @@ Radar-de-Precos/
 │   ├── avaliar_ia.py        # Testa o prompt da IA nos dados já coletados (segundos)
 │   ├── testar_lojas_novas.py# Descobre se uma loja candidata usa VTEX
 │   ├── analise_black_friday.py # Gera o relatório da Black Friday (docs/black-friday.html)
+│   ├── ver_estudo.py        # Acompanha a coleta do estudo (dias por item)
 │   └── windows/             # Atalhos: abrir painel, link para a família, busca agendada
-├── tests/                   # 54 testes automáticos (pytest), sem internet
+├── tests/                   # 56 testes automáticos (pytest), sem internet
 ├── exemplos/                # Dados de exemplo: o painel abre mesmo sem rodar o robô
 ├── docs/                    # Site (GitHub Pages), prints, histórico de decisões e metodologia da análise
 ├── lista_estudo.txt         # Lista FIXA do estudo da Black Friday (casa × típicos de BF)
@@ -147,7 +149,7 @@ O registro de cada busca fica em `busca_automatica.log`. Se o PC estiver desliga
 
 ```powershell
 python -m pip install -r requirements-dev.txt
-python -m pytest                       # 54 testes, sem internet
+python -m pytest                       # 56 testes, sem internet
 python scripts\avaliar_ia.py "protetor solar facial"   # testa o prompt nos dados já coletados
 ```
 
@@ -174,6 +176,7 @@ Cada decisão abaixo veio de um problema real, observado e medido durante o dese
 - **Histórico compara a melhor escolha, não o mais barato.** O selo do barbeador elétrico chegou a mostrar "↑ **1114%**": comparava o elétrico de R$ 129 escolhido pela IA com um aparelho manual de R$ 9,90. O histórico passou a seguir o preço da **escolha da IA** de cada dia.
 - **Histórico compara por unidade.** Ao conferir os selos com dados reais de dois dias, 10 dos 37 itens mostravam variações acima de 70%. A conta estava certa, mas comparava embalagens diferentes: no absorvente, a melhor escolha foi o pacote de 16 em 04/11 e o de 48 em 05/11, e o selo dizia "↑ 190%" quando, por unidade, o preço caiu 3%. Agora a comparação é pelo preço por unidade (R$/L, R$/100 g, R$/10 m), ou pelo preço quando é o mesmo produto, e "já custou R$ X" só fala do mesmo produto. O cálculo usa o valor sem arredondar: em centavos, R$ 0,406/un e R$ 0,393/un viram 0,41 e 0,39, e a diferença de 3,2% viraria 4,9%.
 - **Chave dos anúncios patrocinados da Amazon.** O link dos patrocinados é `/sspa/click?...&url=%2FProduto%2Fdp%2FB0CVXT2K1S...`, com o produto codificado dentro do link. Como a chave cortava tudo depois do `?`, 213 das 531 ofertas da Amazon viravam um único "produto". O `unquote()` decodifica o link antes de procurar o ASIN.
+- **O PC dormiu no meio da busca.** Em 12/11, a busca agendada começou às 11:01 e só terminou às 15:20 (o normal é ~5 min), com Americanas, Atacadão e Muffato vazios em 16 dos 25 itens. As lojas VTEX são consultadas todas de uma vez no começo, em paralelo, e caíram justo na janela sem conexão; e a falha virava uma lista vazia, igual a "a loja não tem". Agora o robô pede ao Windows para não suspender durante a busca (`SetThreadExecutionState`, o mesmo pedido de um player de vídeo), espera a internet voltar antes de começar, tenta cada loja até 3 vezes com espera crescente (*backoff*) e, se mesmo assim falhar, o log diz quais buscas não responderam e quanto tempo a busca levou.
 - **Gráfico sem pandas.** O Controle Inteligente de Aplicativos do Windows 11, ao sair do modo de avaliação e ligar de vez, passou a bloquear um arquivo compilado do pandas (`ImportError: DLL load failed ... Uma política de Controle de Aplicativo bloqueou este arquivo`), e o painel parou de abrir. O pandas só servia para o gráfico, então o gráfico passou a ser um SVG gerado em Python puro, o que dispensou desligar uma proteção do sistema que não pode ser religada. O painel foi testado com `pandas` e `pyarrow` proibidos de carregar. No SVG, cada `$` vira `&#36;`, porque no Markdown do Streamlit um texto entre dois `$` é interpretado como fórmula LaTeX.
 - **SQLite como banco.** Uma linha por produto em cada busca, num único arquivo e com a stdlib. Duas tabelas (`buscas` e `precos`) ligadas por chave estrangeira, gravação em transação (ou grava a busca inteira, ou nada) e consultas parametrizadas (`?`).
 - **Lista salva por callback.** A mãe adicionava um item pelo celular, ia direto para a busca, e o item "sumia". Pelo horário dos arquivos, ele nunca tinha sido salvo: o campo era um formulário que só salva no botão. Agora o campo usa `on_change`, que salva ao apertar Enter ou tocar fora, mostra um aviso, ignora repetidos e tem "Desfazer" ao remover.
@@ -186,7 +189,7 @@ Cada decisão abaixo veio de um problema real, observado e medido durante o dese
 | Busca agendada (04/11/2026, 16:57) | 37 itens, 5 lojas, **757 ofertas**, ~9 min |
 | Ofertas por loja nessa busca | Americanas 101 · Atacadão 124 · Muffato 162 · Magalu 185 · Amazon 185 |
 | Itens com recomendação da IA | 37 de 37 (3 recuperados por nova tentativa) |
-| Testes automáticos | 54 passando (`python -m pytest`) |
+| Testes automáticos | 56 passando (`python -m pytest`) |
 | Compatibilidade | Python 3.11 (ambiente de produção) |
 
 <p align="center">

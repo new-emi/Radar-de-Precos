@@ -34,3 +34,31 @@ def test_lista_do_estudo_tem_dois_grupos_de_10():
     from collections import Counter
     from radar.config import ler_lista_estudo
     assert Counter(ler_lista_estudo().values()) == {"casa": 10, "black_friday": 10}
+
+
+def test_vtex_tenta_de_novo_e_avisa_quando_nao_conecta(monkeypatch):
+    """Caso real de 12/11: o PC acordando, sem internet, e as lojas VTEX voltavam [] em silêncio."""
+    import pytest
+    tentativas = []
+
+    def cai_duas_vezes(*a, **k):
+        tentativas.append(1)
+        if len(tentativas) < 3:
+            raise ConnectionError("sem internet")
+        return _Resposta()
+    monkeypatch.setattr(vtex.requests, "get", cai_duas_vezes)
+    assert len(vtex.buscar("Muffato", "https://loja.exemplo", "papel toalha", esperas=(0, 0))) == 1
+    assert len(tentativas) == 3                       # a 3ª tentativa deu certo
+
+    def sempre_cai(*a, **k):
+        raise ConnectionError("sem internet")
+    monkeypatch.setattr(vtex.requests, "get", sempre_cai)
+    with pytest.raises(vtex.FalhaDeConexao):           # falha não vira "a loja não tem"
+        vtex.buscar("Muffato", "https://loja.exemplo", "papel toalha", esperas=(0, 0))
+
+
+def test_esperar_internet(monkeypatch):
+    from radar import sistema
+    respostas = iter([False, False, True])
+    assert sistema.esperar_internet(max_minutos=1, intervalo=0, testar=lambda: next(respostas))
+    assert not sistema.esperar_internet(max_minutos=0, intervalo=0, testar=lambda: False)

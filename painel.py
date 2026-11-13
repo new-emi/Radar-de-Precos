@@ -710,7 +710,10 @@ with aba_buscar:
         if proc.returncode == 0:
             st.session_state["busca_ok"] = True
             st.rerun()   # recarrega a página inteira com os preços novos
-        st.error("A busca parou no meio por um erro. Tente de novo; se continuar, veja os detalhes técnicos abaixo.")
+        if any("Sem internet há" in l for l in log):
+            st.error("O computador que faz a busca está sem internet. Nada foi alterado; tente de novo daqui a pouco.")
+        else:
+            st.error("A busca parou no meio por um erro. Tente de novo; se continuar, veja os detalhes técnicos abaixo.")
 
     if st.session_state.get("ultimo_log"):
         with st.expander("Detalhes técnicos da última busca"):
