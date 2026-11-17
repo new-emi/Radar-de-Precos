@@ -6,4 +6,4 @@ cd /d "%~dp0..\.."
 set PYTHONIOENCODING=utf-8
 echo. >> busca_automatica.log
 echo ===== %date% %time% ===== >> busca_automatica.log
-".venv\Scripts\python.exe" robo.py >> busca_automatica.log 2>&1
+".venv\Scripts\python.exe" robo.py --agendado >> busca_automatica.log 2>&1
